@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 361181f121f52cf4fad6abcc7ed82889, type: 3}
+  m_Name: BaseDifficultyPreset
+  m_EditorClassIdentifier: 
+  difficultyLevels:
+  - threshold: 0
+    levelSpeed: 21
+    stageAndWeightPairs:
+    - stage: {fileID: 3135050632119917242, guid: 61b81e43e56124942aab40697206fad9, type: 3}
+      weight: 1
+    - stage: {fileID: 3135050632119917242, guid: 31069a27db2d56943b0c72782c3aac6a, type: 3}
+      weight: 2
+    - stage: {fileID: 3135050632119917242, guid: ab76dff28fcc7414980e522422bbfa60, type: 3}
+      weight: 1
+    - stage: {fileID: 3135050632119917242, guid: c681ac335f918de4f946a6b5e59de700, type: 3}
+      weight: 2
+    - stage: {fileID: 543287096898055185, guid: 0881a31f0ad63bb4282afb20818d76b0, type: 3}
+      weight: 2
+    - stage: {fileID: 2717163448784362173, guid: e4a891e946801964a8f61e1f0bad063e, type: 3}
+      weight: 2
+    - stage: {fileID: 8930014174792992043, guid: 66fc78c6a4f415f4198defc596ffa107, type: 3}
+      weight: 1
+    - stage: {fileID: 1980725887626130904, guid: 7ba9c5c8942e24348983d1f0685108b3, type: 3}
+      weight: 2
+    - stage: {fileID: 9037657570478248452, guid: 0a7c731ff62712847abb2c0e4d399a5c, type: 3}
+      weight: 1
+    coinValue: 25
+  - threshold: 10
+    levelSpeed: 23
+    stageAndWeightPairs:
+    - stage: {fileID: 3135050632119917242, guid: 61b81e43e56124942aab40697206fad9, type: 3}
+      weight: 3
+    - stage: {fileID: 3135050632119917242, guid: 31069a27db2d56943b0c72782c3aac6a, type: 3}
+      weight: 3
+    - stage: {fileID: 3135050632119917242, guid: ab76dff28fcc7414980e522422bbfa60, type: 3}
+      weight: 1
+    - stage: {fileID: 3135050632119917242, guid: 06c71d968c9667440849822e49d89375, type: 3}
+      weight: 6
+    - stage: {fileID: 3135050632119917242, guid: 478b31ed34bbf204298bdd9cb083239f, type: 3}
+      weight: 6
+    - stage: {fileID: 3135050632119917242, guid: cd8714687b427514dbb380ac6e832eca, type: 3}
+      weight: 6
+    - stage: {fileID: 543287096898055185, guid: 0881a31f0ad63bb4282afb20818d76b0, type: 3}
+      weight: 3
+    - stage: {fileID: 1980725887626130904, guid: 7ba9c5c8942e24348983d1f0685108b3, type: 3}
+      weight: 3
+    - stage: {fileID: 2717163448784362173, guid: e4a891e946801964a8f61e1f0bad063e, type: 3}
+      weight: 3
+    - stage: {fileID: 3135050632119917242, guid: b1ec2ce5180eb4145ba3494ca5600dd5, type: 3}
+      weight: 4
+    - stage: {fileID: 8930014174792992043, guid: 66fc78c6a4f415f4198defc596ffa107, type: 3}
+      weight: 2
+    - stage: {fileID: 3066862727591374611, guid: 1e204ec08d6e88d43bd396369d3bfeb0, type: 3}
+      weight: 2
+    - stage: {fileID: 9037657570478248452, guid: 0a7c731ff62712847abb2c0e4d399a5c, type: 3}
+      weight: 1
+    coinValue: 25
+  - threshold: 20
+    levelSpeed: 26
+    stageAndWeightPairs:
+    - stage: {fileID: 3135050632119917242, guid: 61b81e43e56124942aab40697206fad9, type: 3}
+      weight: 1
+    - stage: {fileID: 8930014174792992043, guid: 66fc78c6a4f415f4198defc596ffa107, type: 3}
+      weight: 1
+    - stage: {fileID: 3135050632119917242, guid: ab76dff28fcc7414980e522422bbfa60, type: 3}
+      weight: 1
+    - stage: {fileID: 3135050632119917242, guid: 06c71d968c9667440849822e49d89375, type: 3}
+      weight: 7
+    - stage: {fileID: 3135050632119917242, guid: cd8714687b427514dbb380ac6e832eca, type: 3}
+      weight: 3
+    - stage: {fileID: 1980725887626130904, guid: 7ba9c5c8942e24348983d1f0685108b3, type: 3}
+      weight: 2
+    - stage: {fileID: 3135050632119917242, guid: 478b31ed34bbf204298bdd9cb083239f, type: 3}
+      weight: 10
+    - stage: {fileID: 9037657570478248452, guid: 0a7c731ff62712847abb2c0e4d399a5c, type: 3}
+      weight: 1
+    - stage: {fileID: 3066862727591374611, guid: 1e204ec08d6e88d43bd396369d3bfeb0, type: 3}
+      weight: 2
+    coinValue: 25
+  - threshold: 35
+    levelSpeed: 29
+    stageAndWeightPairs:
+    - stage: {fileID: 3135050632119917242, guid: 31069a27db2d56943b0c72782c3aac6a, type: 3}
+      weight: 1
+    - stage: {fileID: 3135050632119917242, guid: ab76dff28fcc7414980e522422bbfa60, type: 3}
+      weight: 2
+    - stage: {fileID: 3135050632119917242, guid: 06c71d968c9667440849822e49d89375, type: 3}
+      weight: 3
+    - stage: {fileID: 3135050632119917242, guid: cd8714687b427514dbb380ac6e832eca, type: 3}
+      weight: 3
+    - stage: {fileID: 3135050632119917242, guid: 478b31ed34bbf204298bdd9cb083239f, type: 3}
+      weight: 6
+    - stage: {fileID: 3066862727591374611, guid: 1e204ec08d6e88d43bd396369d3bfeb0, type: 3}
+      weight: 1
+    - stage: {fileID: 8930014174792992043, guid: 66fc78c6a4f415f4198defc596ffa107, type: 3}
+      weight: 1
+    - stage: {fileID: 3135050632119917242, guid: b1ec2ce5180eb4145ba3494ca5600dd5, type: 3}
+      weight: 5
+    coinValue: 25
