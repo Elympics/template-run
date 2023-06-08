@@ -6,6 +6,8 @@
 
 # Open-source endless runner template by Elympics
 
+https://github.com/Elympics/template-run/assets/1230922/073b09aa-96f1-4586-97cc-f02a6ce885ef
+
 This repository is a *free* endless runner template for Unity game developers that want to build their first secure and cheat-proof competitive game with leaderboards. Security is ensured by constant supervision of the server, which makes game results reliable and trustworthy. The template is designed as a sample mobile game but feel free to adapt it to your needs and other platforms. You can access its source code here and use it as a basis for your own competitive game to further build on it. Note that integration with Elympics and leaderboards is universal and can be used in any other type of game.
 
 This template is meant to be a learning resource for the new users of Elympics, our standard industry framework for blockchain-integrated multiplayer games. It’ll help you understand how it works and how certain features could be implemented.
