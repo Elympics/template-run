@@ -12,6 +12,11 @@ This repository is a *free* endless runner template for Unity game developers th
 
 This template is meant to be a learning resource for the new users of Elympics, our standard industry framework for blockchain-integrated multiplayer games. It’ll help you understand how it works and how certain features could be implemented.
 
+![Template Run Screenshot 0](https://static.elympics.cc/screenshots/templaterun-0.png)
+![Template Run Screenshot 1](https://static.elympics.cc/screenshots/templaterun-1.png)
+![Template Run Screenshot 2](https://static.elympics.cc/screenshots/templaterun-2.png)
+![Template Run Screenshot 3](https://static.elympics.cc/screenshots/templaterun-3.png)
+
 ## How to use it?
 
 - Clone repository
