@@ -6,12 +6,28 @@ using System;
 public class MenuController : MonoBehaviour
 {
 	[SerializeField] private Button playButton;
+	[SerializeField] private TMPro.TextMeshProUGUI errorMessage;
+	[SerializeField] private GameObject errorPanel;
 
 	private void Start()
 	{
 		ControlPlayAccess(ElympicsLobbyClient.Instance.IsAuthenticated);
 		ElympicsLobbyClient.Instance.AuthenticationSucceeded += (_) => ControlPlayAccess(true);
 		ElympicsLobbyClient.Instance.AuthenticationFailed += (error) => Debug.LogError(error);
+		ElympicsLobbyClient.Instance.Matchmaker.MatchmakingFailed += OnMatchmakingFailed;
+	}
+
+	private void OnDestroy()
+	{
+		ElympicsLobbyClient.Instance.Matchmaker.MatchmakingFailed -= OnMatchmakingFailed;
+	}
+
+	private void OnMatchmakingFailed((string error, Guid _) result)
+	{
+		LoadingScreenManager.Instance.SetSliderOpen(true);
+
+		errorPanel.SetActive(true);
+		errorMessage.text = result.error;
 	}
 
 	private void ControlPlayAccess(bool allowToPlay)

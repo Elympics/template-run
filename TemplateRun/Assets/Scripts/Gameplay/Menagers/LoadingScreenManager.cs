@@ -56,7 +56,8 @@ public class LoadingScreenManager : MonoBehaviour
 
     private void ReactToSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        SetSliderOpen(true);
+        if (scene.buildIndex == 0)
+            SetSliderOpen(true);
     }
 
     public void SetSliderOpen(bool open)

@@ -140,6 +140,21 @@ public class SoundManager : MonoBehaviour
     private void AdjustMusicToScene(Scene newScene, LoadSceneMode mode)
     {
         isOnMenuScene = newScene.buildIndex == 0;
+
+        if (isOnMenuScene)
+        {
+            SetupMenuMusic();
+        }
+        else
+        {
+            jumpManager = FindObjectOfType<JumpManager>();
+            FindObjectOfType<GameStateSynchronizer>().SubscribeToGameStateChange(AdjustToGameState);
+            FindObjectOfType<CoinCollector>().SubscribeToCoinPickedUp(PlayCoinSound);
+        }
+    }
+
+    public void SetUpMusic()
+    {
         if (isOnMenuScene) SetupMenuMusic();
         else SetupGameplayMusic();
     }
@@ -166,11 +181,9 @@ public class SoundManager : MonoBehaviour
         resultsMusic[0].Stop();
         resultsMusic[1].Stop();
         gameplayMusic[0].Play();
+        gameplayMusic[1].Stop();
         playingALoop = true;
         loopedMusicTimer = 0;
-        jumpManager = FindObjectOfType<JumpManager>();
-        FindObjectOfType<GameStateSynchronizer>().SubscribeToGameStateChange(AdjustToGameState);
-        FindObjectOfType<CoinCollector>().SubscribeToCoinPickedUp(PlayCoinSound);
     }
 
 

@@ -788,7 +788,7 @@ MonoBehaviour:
   messageStayDuration: 2
   shortMessageStayDuration: 0.1
   messageSlideDuration: 0.5
-  targetMessageOffset: {x: -1500, y: 140}
+  targetMessageOffset: {x: -1500, y: -150}
 --- !u!114 &9215224324105808022
 MonoBehaviour:
   m_ObjectHideFlags: 0

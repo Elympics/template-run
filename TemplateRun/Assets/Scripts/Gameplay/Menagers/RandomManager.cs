@@ -1,17 +1,10 @@
 using UnityEngine;
 using Elympics;
-using System;
-using MatchTcpClients.Synchronizer;
 
-public class RandomManager : MonoBehaviour, IClientHandlerGuid
+public class RandomManager : MonoBehaviour
 {
     [SerializeField] private ElympicsInt randomSeed = new ElympicsInt();
     public System.Random InitializedRandom { get; private set; }
-
-    public void OnStandaloneClientInit(InitialMatchPlayerDataGuid data)
-    {
-        SetSeed(BitConverter.ToInt32(data.GameEngineData));
-    }
 
     public void ResetRandom(int tick)
     {
@@ -22,17 +15,5 @@ public class RandomManager : MonoBehaviour, IClientHandlerGuid
     public void SetSeed(int seed)
     {
         randomSeed.Value = seed;
-    }
-
-    public void OnAuthenticated(Guid userId) { }
-    public void OnAuthenticatedFailed(string errorMessage) { }
-    public void OnClientsOnServerInit(InitialMatchPlayerDatasGuid data) { }
-    public void OnConnected(TimeSynchronizationData data) { }
-    public void OnConnectingFailed() { }
-    public void OnDisconnectedByClient() { }
-    public void OnDisconnectedByServer() { }
-    public void OnMatchEnded(Guid matchId) { }
-    public void OnMatchJoined(Guid matchId) { }
-    public void OnMatchJoinedFailed(string errorMessage) { }
-    public void OnSynchronized(TimeSynchronizationData data) { }    
+    }  
 }

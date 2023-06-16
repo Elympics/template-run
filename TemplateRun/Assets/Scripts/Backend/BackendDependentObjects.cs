@@ -15,7 +15,6 @@ public class BackendDependentObjects : MonoBehaviour
 	[SerializeField] private TMP_InputField nicknameInputField;
 	[SerializeField] private Button submitNicknameButton;
 
-	[SerializeField] private Button logoutButton;
 	[SerializeField] private Button googleSignInButton;
 	[SerializeField] private Button appleSignInButton;
 	[SerializeField] private Button emailSignInButton;
@@ -33,8 +32,6 @@ public class BackendDependentObjects : MonoBehaviour
 	private void Start()
 	{
 		submitNicknameButton.onClick.AddListener(() => LoginManager.Instance.SubmitNickname(nicknameInputField.text));
-
-		logoutButton.onClick.AddListener(LoginManager.Instance.SignOut);
 	}
 
 	public void ManageActiveState(bool needsAuthentication)
@@ -47,6 +44,7 @@ public class BackendDependentObjects : MonoBehaviour
 			element.SetActive(!needsAuthentication);
 		}
 
+		nicknamePanel.SetActive(false);
 		anonymousSignInLoading.SetActive(!needsAuthentication);
 	}
 
