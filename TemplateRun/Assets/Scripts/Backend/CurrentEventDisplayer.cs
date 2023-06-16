@@ -19,7 +19,7 @@ public class CurrentEventDisplayer : MonoBehaviour
 
         if (remainingTime > TimeSpan.Zero)
         {
-            remainingTimeText.text = $"{remainingTime.Hours:00} : {remainingTime.Minutes:00} : {remainingTime.Seconds:00}";
+            remainingTimeText.text = $"{Mathf.FloorToInt((float)remainingTime.TotalHours):00} : {remainingTime.Minutes:00} : {remainingTime.Seconds:00}";
         }
         else
         {

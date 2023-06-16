@@ -3,6 +3,7 @@ using Elympics;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class LeaderboardsDisplayer : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
 
 	[SerializeField] private CurrentEventDisplayer currentEventDisplayer;
 	[SerializeField] private LeaderboardEntryUI[] leaderboardVisualEntries;
+	[SerializeField] private int delayMs = 500;
 
 	private LeaderboardClient leaderboardClient;
 
@@ -19,7 +21,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
 
 	public void InitializeAndRun() => BackendWebClient.GetCurrentLeaderboard(HandleRequest);
 
-	private void HandleRequest(Result<LeaderboardRequestModel, Exception> result)
+    private async void HandleRequest(Result<LeaderboardRequestModel, Exception> result)
 	{
 		if (result.IsFailure)
 			return;
@@ -31,6 +33,8 @@ public class LeaderboardsDisplayer : MonoBehaviour
 		leaderboardClient = new LeaderboardClient(RecordsToFetch, timeScope, QueueDict.MatchmakingQueueSolo, Enum.Parse<LeaderboardGameVersion>(result.Value.LeaderboardGameVersion));
 
 		storedEntries = new LeaderboardEntry[leaderboardVisualEntries.Length];
+
+		await Task.Delay(delayMs);
 
 		if (ElympicsLobbyClient.Instance.IsAuthenticated)
 			FetchTopThree();
@@ -44,7 +48,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
 	}
 
 	private void FetchTopThree(Elympics.Models.Authentication.AuthData _ = null) => leaderboardClient.FetchFirstPage(HandleFirstPageFetch, OmitFailure);
-	private void FetchSecondTopThree() => leaderboardClient.FetchNextPage(HandleSecondTopThreeFetch, OmitFailure);
+	private void FetchSecondTopThree() => leaderboardClient.FetchNextPage(HandleSecondTopThreeFetch, (_) => FetchNicknames());
 	private void FetchUserPage() => leaderboardClient.FetchPageWithUser(HandleUserPageFetch, (_) => FetchSecondTopThree());
 
 	private void HandleFirstPageFetch(LeaderboardFetchResult fetchResult)
@@ -95,7 +99,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
 			leaderboardVisualEntries[RecordsToFetch + RecordsToFetch - 2].HighlightEntry();
 			StoreEntries(fetchResult.Entries.GetRange(1, fetchResult.Entries.Count - 1), RecordsToFetch);
 
-			leaderboardClient.FetchNextPage(x => HandleMissingNeighbourRecord(x, leaderboardVisualEntries.Length - 1, 0));
+            leaderboardClient.FetchNextPage(x => HandleMissingNeighbourRecord(x, leaderboardVisualEntries.Length - 1, 0), OmitFailure);
 		}
 	}
 
