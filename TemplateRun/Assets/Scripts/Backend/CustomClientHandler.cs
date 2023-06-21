@@ -7,7 +7,7 @@ public class CustomClientHandler : ElympicsMonoBehaviour, IClientHandlerGuid
 {
     [SerializeField] private RandomManager randomManager;
     [SerializeField] private GameStateSynchronizer gameStateSynchronizer;
-    [SerializeField] private GameObject errorPanel;
+    [SerializeField] private ErrorPanel errorPanel;
     [SerializeField] private int timeoutSeconds = 5;
 
     private DateTime? timeoutThreshold;
@@ -36,13 +36,16 @@ public class CustomClientHandler : ElympicsMonoBehaviour, IClientHandlerGuid
         if (timeoutThreshold != null && timeoutThreshold < DateTime.Now && gameStateSynchronizer.GameState != GameState.GameEnded)
         {
             Elympics.Disconnect();
-            errorPanel.SetActive(true);
+
+            OnConnectingFailed();
+
+            timeoutThreshold = null;
         }
     }
 
     public void OnConnectingFailed()
     {
-        errorPanel.SetActive(true);
+        errorPanel.Display("Connection error!\n Check your Internet connection", false);
     }
 
     #region Unused

@@ -64,6 +64,11 @@ public class SoundManager : MonoBehaviour
         SaveDefaultVolumes();
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= AdjustMusicToScene;
+    }
+
     private void SaveDefaultVolumes()
     {
         menuDefaultVolume = menuMusic[0].volume / defaultVolume;
