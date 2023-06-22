@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using static Elympics.ElympicsCloudPing;
+using Cysharp.Threading.Tasks;
 
 [Serializable]
 [CreateAssetMenu(menuName = "ScriptableObjects/RegionData")]
@@ -8,11 +9,17 @@ public class RegionData : ScriptableObject
 {
     [SerializeField] private string[] availableRegions = new string[] { "warsaw", "dallas" };
 
-    public string Region { get; set; }
-    public float LatencyMs { get; set; }
+    private bool alreadyCached = false;
+    private (string Region, float LatencyMs) CachedClosestRegion;
 
-    private async void OnEnable()
+    public async UniTask<(string Region, float LatencyMs)> ClosestRegion()
     {
-        (Region, LatencyMs) = await ChooseClosestRegion(availableRegions);
+        if (!alreadyCached)
+        {
+            CachedClosestRegion = await ChooseClosestRegion(availableRegions);
+            alreadyCached = true;
+        }
+
+        return CachedClosestRegion;
     }
 }
