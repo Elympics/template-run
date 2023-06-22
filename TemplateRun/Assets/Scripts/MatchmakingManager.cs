@@ -27,13 +27,14 @@ public class MatchmakingManager : MonoBehaviour
     private void OnMatchmakingFailed((string error, Guid _) result) => errorPanel.Display(result.error, true);
 
     [UsedImplicitly]
-    public void PlayOnline()
+    public async void PlayOnline()
     {
         LoadingScreenManager.Instance.SetSliderOpen(false);
         ControlPlayAccess(false);
 
-        ElympicsLobbyClient.Instance.PlayOnlineInRegion(regionData.Region, null, null, QueueDict.MatchmakingQueueSolo);
+        var (Region, LatencyMs) = await regionData.ClosestRegion();
+        ElympicsLobbyClient.Instance.PlayOnlineInRegion(Region, null, null, QueueDict.MatchmakingQueueSolo);
 
-        Debug.Log($"Connecting to region {regionData.Region} with ping {regionData.LatencyMs}");
+        Debug.Log($"Connecting to region {Region} with ping {LatencyMs}");
     }
 }
