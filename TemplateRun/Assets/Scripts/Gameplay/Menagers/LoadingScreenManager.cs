@@ -37,7 +37,7 @@ public class LoadingScreenManager : MonoBehaviour
     private float messageTimer;
     private int messageIndex;
 
-    public void Awake()
+    private void Awake()
     {
         if (Instance != null)
         {
@@ -51,6 +51,11 @@ public class LoadingScreenManager : MonoBehaviour
         isOpen = true;
         wasOpen = true;
         SceneManager.sceneLoaded += ReactToSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= ReactToSceneLoaded;
     }
 
 

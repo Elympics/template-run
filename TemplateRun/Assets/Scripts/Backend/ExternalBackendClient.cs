@@ -1,16 +1,15 @@
 ﻿using Elympics;
 using System;
 
-public static class BackendWebClient
+public static class ExternalBackendClient
 {
 	private static readonly string BaseUrl = "https://os-templaterun-api.elympics.cc/api/v1/elympics/";
 	private static readonly string GetNicknamePath = "players/get_nickname";
 	private static readonly string SetNicknamePath = "players/set_nickname";
 	private static readonly string NicknamesFromIdsPath = "players/get_nicknames";
-	private static readonly string GetLeaderboardPath = "leaderboard/";
+	private static readonly string GetCurrentLeaderboardPropertiesPath = "leaderboard/";
 
 	private static string ElympicsToken => ElympicsLobbyClient.Instance.AuthData?.JwtToken;
-
 	private static string ElympicsAuth => $"Bearer {ElympicsToken}";
 
 	private static BackendRequestModel CreateBackendModel(string nickname = null, string[] elympicsIds = null) =>
@@ -26,5 +25,5 @@ public static class BackendWebClient
 		ElympicsWebClient.SendPostRequest(string.Concat(BaseUrl, NicknamesFromIdsPath), CreateBackendModel(null, elympicsIds), ElympicsAuth, callback);
 
 	public static void GetCurrentLeaderboard(Action<Result<LeaderboardRequestModel, Exception>> callback) =>
-		ElympicsWebClient.SendGetRequest(string.Concat(BaseUrl, GetLeaderboardPath), null, ElympicsAuth, callback);
+		ElympicsWebClient.SendGetRequest(string.Concat(BaseUrl, GetCurrentLeaderboardPropertiesPath), null, ElympicsAuth, callback);
 }
