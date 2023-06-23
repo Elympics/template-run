@@ -4,7 +4,7 @@ using static Elympics.ElympicsCloudPing;
 using Cysharp.Threading.Tasks;
 
 [Serializable]
-[CreateAssetMenu(menuName = "ScriptableObjects/RegionData")]
+[CreateAssetMenu(fileName = "RegionData", menuName = "TemplateRun/RegionData")]
 public class RegionData : ScriptableObject
 {
     [SerializeField] private string[] availableRegions = new string[] { "warsaw", "dallas" };

@@ -1,17 +1,14 @@
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class BuildVersionView : MonoBehaviour
 {
-	private TextMeshProUGUI tmp;
+    private void Start()
+    {
+        var buildInfo = new BuildInfoData();
+        var label = GetComponent<TextMeshProUGUI>();
 
-	private void Awake()
-	{
-		tmp = GetComponent<TextMeshProUGUI>();
-
-		var buildInfoData = BuildInfoData.Load();
-		buildInfoData.SetupBuildInfo();
-		
-		tmp.text = $"v{buildInfoData.GameVersion} ({buildInfoData.ElympicsBuildNumber}) - sdk {buildInfoData.ElympicsSDKVersion}";
-	}
+        label.text = $"v{buildInfo.GameVersion} ({buildInfo.ElympicsBuildNumber}) - sdk {buildInfo.ElympicsSDKVersion}";
+    }
 }
