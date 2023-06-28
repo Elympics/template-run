@@ -6,13 +6,14 @@ using Elympics;
 
 public class LeaderboardEntryUI : MonoBehaviour
 {
+    [Header("UI references")]
     [SerializeField] private TextMeshProUGUI positionText;
     [SerializeField] private TextMeshProUGUI nicknameText;
     [SerializeField] private TextMeshProUGUI scoreText;
-
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image rankBackgroundImage;
 
+    [Header("Current user highlight visuals")]
     [SerializeField] private Color currentUserTextColor;
     [SerializeField] private Sprite currentUserBackground;
     [SerializeField] private Sprite currentUserRankBackground;
@@ -27,14 +28,14 @@ public class LeaderboardEntryUI : MonoBehaviour
         scoreText.text = entry.Score.ToString("0");
     }
 
-    public void HighlightEntry(LeaderboardEntry entry = null)
+    public void HighlightEntry(bool topThree = false)
     {
         positionText.color = currentUserTextColor;
         nicknameText.color = currentUserTextColor;
         scoreText.color = currentUserTextColor;
 
         backgroundImage.sprite = currentUserBackground;
-        if (entry == null || entry.Position > 3)
+        if (!topThree)
             rankBackgroundImage.sprite = currentUserRankBackground;
     }
 }

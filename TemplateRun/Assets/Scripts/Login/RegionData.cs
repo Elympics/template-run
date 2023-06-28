@@ -10,16 +10,17 @@ public class RegionData : ScriptableObject
     [SerializeField] private string[] availableRegions = new string[] { "warsaw", "dallas" };
 
     private bool alreadyCached = false;
-    private (string Region, float LatencyMs) CachedClosestRegion;
+    private string Region;
+    private float LatencyMs;
 
     public async UniTask<(string Region, float LatencyMs)> ClosestRegion()
     {
         if (!alreadyCached)
         {
-            CachedClosestRegion = await ChooseClosestRegion(availableRegions);
+            (Region, LatencyMs) = await ChooseClosestRegion(availableRegions);
             alreadyCached = true;
         }
 
-        return CachedClosestRegion;
+        return (Region, LatencyMs);
     }
 }
