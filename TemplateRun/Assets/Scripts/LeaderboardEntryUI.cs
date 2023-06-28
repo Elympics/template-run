@@ -28,14 +28,14 @@ public class LeaderboardEntryUI : MonoBehaviour
         scoreText.text = entry.Score.ToString("0");
     }
 
-    public void HighlightEntry(bool topThree = false)
+    public void HighlightEntry(bool isTopThree = false)
     {
         positionText.color = currentUserTextColor;
         nicknameText.color = currentUserTextColor;
         scoreText.color = currentUserTextColor;
 
         backgroundImage.sprite = currentUserBackground;
-        if (!topThree)
+        if (!isTopThree)
             rankBackgroundImage.sprite = currentUserRankBackground;
     }
 }
