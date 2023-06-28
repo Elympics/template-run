@@ -10,24 +10,21 @@ public static class ExternalBackendClient
     private static readonly string GetNicknameRoute = "players/get_nickname";
     private static readonly string SetNicknameRoute = "players/set_nickname";
     private static readonly string NicknamesFromIdsRoute = "players/get_nicknames";
-    private static readonly string GetCurrentLeaderboardPropertiesRoute = "leaderboard/";
+    private static readonly string GetCurrentLeaderboardRoute = "leaderboard/";
 
     private static string ElympicsAuth => $"Bearer {ElympicsLobbyClient.Instance.AuthData?.JwtToken}";
-
-    private static BackendRequestModel CreateBackendModel(string nickname = null, string[] elympicsIds = null) =>
-        new BackendRequestModel { Nickname = nickname, ElympicsUserIds = elympicsIds };
 
     public static void GetNickname(Action<Result<IdNicknamePair, Exception>> callback) =>
         SendBackendRequest(UnityWebRequest.kHttpVerbPOST, GetNicknameRoute, callback);
 
     public static void SetNickname(Action<Result<IdNicknamePair, Exception>> callback, string nickname) =>
-        SendBackendRequest(UnityWebRequest.kHttpVerbPUT, SetNicknameRoute, callback, CreateBackendModel(nickname));
+        SendBackendRequest(UnityWebRequest.kHttpVerbPUT, SetNicknameRoute, callback, new SetNicknameRequestModel(nickname));
 
     public static void GetNicknamesFromIds(Action<Result<IdNicknamePairs, Exception>> callback, string[] elympicsIds) =>
-        SendBackendRequest(UnityWebRequest.kHttpVerbPOST, NicknamesFromIdsRoute, callback, CreateBackendModel(null, elympicsIds));
+        SendBackendRequest(UnityWebRequest.kHttpVerbPOST, NicknamesFromIdsRoute, callback, new GetNicknamesRequestModel(elympicsIds));
 
-    public static void GetCurrentLeaderboard(Action<Result<LeaderboardRequestModel, Exception>> callback) =>
-        SendBackendRequest(UnityWebRequest.kHttpVerbGET, GetCurrentLeaderboardPropertiesRoute, callback);
+    public static void GetCurrentLeaderboardProperties(Action<Result<LeaderboardRequestModel, Exception>> callback) =>
+        SendBackendRequest(UnityWebRequest.kHttpVerbGET, GetCurrentLeaderboardRoute, callback);
 
     private static void SendBackendRequest<T>(string method, string route, Action<Result<T, Exception>> callback = null, object jsonBody = null) where T : class
     {

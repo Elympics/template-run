@@ -24,7 +24,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
     public void InitializeAndRun()
     {
         FetchAlreadyStarted = true;
-        ExternalBackendClient.GetCurrentLeaderboard(HandleRequest);
+        ExternalBackendClient.GetCurrentLeaderboardProperties(HandleRequest);
     }
 
     private async void HandleRequest(Result<LeaderboardRequestModel, Exception> result)
@@ -36,7 +36,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
             currentEventDisplayer.TimeTo = DateTime.Parse(result.Value.DateTo);
 
         var timeScope = new LeaderboardTimeScope(DateTimeOffset.Parse(result.Value.DateFrom), DateTimeOffset.Parse(result.Value.DateTo));
-        leaderboardClient = new LeaderboardClient(RecordsToFetch, timeScope, QueueDict.MatchmakingQueueSolo, Enum.Parse<LeaderboardGameVersion>(result.Value.LeaderboardGameVersion));
+        leaderboardClient = new LeaderboardClient(RecordsToFetch, timeScope, result.Value.QueueName, Enum.Parse<LeaderboardGameVersion>(result.Value.LeaderboardGameVersion));
 
         storedEntries = new LeaderboardEntry[leaderboardVisualEntries.Length];
 

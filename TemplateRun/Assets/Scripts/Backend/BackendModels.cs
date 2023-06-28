@@ -1,10 +1,19 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class BackendRequestModel
+public class SetNicknameRequestModel
 {
     public string Nickname;
+
+    public SetNicknameRequestModel(string nickname) => Nickname = nickname;
+}
+
+[System.Serializable]
+public class GetNicknamesRequestModel
+{
     public string[] ElympicsUserIds;
+
+    public GetNicknamesRequestModel(string[] elympicsUserIds) => ElympicsUserIds = elympicsUserIds;
 }
 
 [System.Serializable]
@@ -25,12 +34,9 @@ public class IdNicknamePairs
 [System.Serializable]
 public class LeaderboardRequestModel
 {
-    public string GameId;
-    public string GameVersion;
     public string LeaderboardGameVersion;
     public string QueueName;
     public string TimeScope;
     public string DateFrom;
     public string DateTo;
 }
-
