@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance;
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private GameObject soundOffIcon;
     [SerializeField] private GameObject soundOnIcon;
@@ -15,6 +14,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private GameObject closeSettingsButton;
     [SerializeField] private GameObject soundOptions;
     [SerializeField][Range(0f, 1f)] private float currentVolume = 0.5f;
+
     [Header("Audio Sources")]
     [SerializeField] private AudioSource[] menuMusic;
     [SerializeField] private AudioSource[] gameplayMusic;
@@ -23,10 +23,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource landSound;
     [SerializeField] private AudioSource coinSound;
+
     [Header("LoopingMusic")]
     [SerializeField] private float menuLoopDuration;
     [SerializeField] private float gameplayLoopDuration;
     [SerializeField] private float resultsLoopDuration;
+
     private float defaultVolume = 0.5f;
     private float loopedMusicTimer;
     bool playingALoop;
@@ -47,26 +49,12 @@ public class SoundManager : MonoBehaviour
 
     private JumpManager jumpManager = null;
 
-    public void Awake()
+    public void SetUpOnAwake()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += AdjustMusicToScene;
         menuMusic[0].Play();
         loopedMusicTimer = 0;
         playingALoop = true;
         SaveDefaultVolumes();
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= AdjustMusicToScene;
     }
 
     private void SaveDefaultVolumes()
@@ -142,7 +130,7 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    private void AdjustMusicToScene(Scene newScene, LoadSceneMode mode)
+    public void AdjustMusicToScene(Scene newScene)
     {
         isOnMenuScene = newScene.buildIndex == 0;
 

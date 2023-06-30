@@ -16,8 +16,8 @@ public class CustomClientHandler : ElympicsMonoBehaviour, IClientHandlerGuid
     {
         if (Elympics.IsClient)
         {
-            LoadingScreenManager.Instance.SetSliderOpen(true);
-            SoundManager.Instance.SetUpMusic();
+            PersistentManagers.Instance.SetLoadingScreenSliderOpen(true);
+            PersistentManagers.Instance.SetUpSoundManagerMusic();
         }
     }
 

@@ -29,7 +29,7 @@ public class MatchmakingManager : MonoBehaviour
     [UsedImplicitly]
     public void PlayOnline()
     {
-        LoadingScreenManager.Instance.SetSliderOpen(false);
+        PersistentManagers.Instance.SetLoadingScreenSliderOpen(false);
         ControlPlayAccess(false);
 
         ElympicsLobbyClient.Instance.PlayOnlineInRegion(regionData.Region, null, null, QueueDict.MatchmakingQueueSolo);

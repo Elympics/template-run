@@ -7,7 +7,6 @@ using TMPro;
 
 public class LoadingScreenManager : MonoBehaviour
 {
-    public static LoadingScreenManager Instance;
     [SerializeField] private Slider sliderTopPart;
     [SerializeField] private Slider sliderBottomPart;
     [SerializeField] private GameObject darkTint;
@@ -37,29 +36,14 @@ public class LoadingScreenManager : MonoBehaviour
     private float messageTimer;
     private int messageIndex;
 
-    private void Awake()
+    public void SetUpOnAwake()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
         OpenSlider();
         isOpen = true;
         wasOpen = true;
-        SceneManager.sceneLoaded += ReactToSceneLoaded;
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= ReactToSceneLoaded;
-    }
-
-
-    private void ReactToSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void AdjustToSceneLoaded(Scene scene)
     {
         if (scene.buildIndex == 0)
             SetSliderOpen(true);
