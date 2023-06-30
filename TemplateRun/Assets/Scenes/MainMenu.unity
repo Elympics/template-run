@@ -5509,6 +5509,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4526064351936486920, guid: 4a6961e13c864574da5563caf63fc023, type: 3}
+      propertyPath: fetchDelayMs
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4526064351936486920, guid: 4a6961e13c864574da5563caf63fc023, type: 3}
       propertyPath: menuController
       value: 
       objectReference: {fileID: 1014568845}

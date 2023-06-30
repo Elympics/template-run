@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 [System.Serializable]
-[CreateAssetMenu(menuName = "ScriptableObjects/DifficultyPreset")]
+[CreateAssetMenu(fileName = "DifficultyPreset", menuName = "TemplateRun/DifficultyPreset")]
 public class DifficultyPreset : ScriptableObject //Scriptable object in which we can set how our game's difficulty will progress, by setting threshholds, speed and set of levels from which we randomize the map
 {
     [System.Serializable]

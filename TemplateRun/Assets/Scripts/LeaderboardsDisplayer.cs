@@ -7,40 +7,40 @@ using System.Threading.Tasks;
 
 public class LeaderboardsDisplayer : MonoBehaviour
 {
-    private const int RecordsToFetch = 3;
+    private static readonly int RecordsToFetch = 3;
 
     [SerializeField] private CurrentEventDisplayer currentEventDisplayer;
     [SerializeField] private LeaderboardEntryUI[] leaderboardVisualEntries;
-    [SerializeField] private int delayMs = 500;
+    [SerializeField] private int fetchDelayMs = 500;
 
     private LeaderboardClient leaderboardClient;
 
     private LeaderboardEntry[] storedEntries;
     private LeaderboardEntry currentPlayerEntry;
-    public event Action<LeaderboardEntry> OnCurrentPlayerEntrySet;
 
+    public event Action<LeaderboardEntry> OnCurrentPlayerEntrySet;
     public bool FetchAlreadyStarted { get; private set; } = false;
 
     public void InitializeAndRun()
     {
         FetchAlreadyStarted = true;
-        ExternalBackendClient.GetCurrentLeaderboard(HandleRequest);
+        ExternalBackendClient.GetCurrentLeaderboardProperties(HandleLeaderboardRequest);
     }
 
-    private async void HandleRequest(Result<LeaderboardRequestModel, Exception> result)
+    private async void HandleLeaderboardRequest(Result<LeaderboardRequestModel, Exception> result)
     {
         if (result.IsFailure)
             return;
+
+        storedEntries = new LeaderboardEntry[leaderboardVisualEntries.Length];
 
         if (currentEventDisplayer != null)
             currentEventDisplayer.TimeTo = DateTime.Parse(result.Value.DateTo);
 
         var timeScope = new LeaderboardTimeScope(DateTimeOffset.Parse(result.Value.DateFrom), DateTimeOffset.Parse(result.Value.DateTo));
-        leaderboardClient = new LeaderboardClient(RecordsToFetch, timeScope, QueueDict.MatchmakingQueueSolo, Enum.Parse<LeaderboardGameVersion>(result.Value.LeaderboardGameVersion));
+        leaderboardClient = new LeaderboardClient(RecordsToFetch, timeScope, result.Value.QueueName, Enum.Parse<LeaderboardGameVersion>(result.Value.LeaderboardGameVersion));
 
-        storedEntries = new LeaderboardEntry[leaderboardVisualEntries.Length];
-
-        await Task.Delay(delayMs);
+        await Task.Delay(fetchDelayMs);
 
         if (ElympicsLobbyClient.Instance.IsAuthenticated)
             FetchTopThree();
@@ -133,7 +133,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
             if (ContainsCurrentUser(entries[i]))
             {
                 if (shouldHighlightCurrentPlayer)
-                    leaderboardVisualEntries[visualEntriesIndexOffset + i].HighlightEntry(entries[i]);
+                    leaderboardVisualEntries[visualEntriesIndexOffset + i].HighlightEntry(entries[i].Position <= 3);
 
                 return i;
             }
@@ -159,21 +159,15 @@ public class LeaderboardsDisplayer : MonoBehaviour
 
     private void DisplayEntries(Result<IdNicknamePairs, Exception> result)
     {
+        if (result.IsFailure)
+            return;
+
         for (int i = 0; i < leaderboardVisualEntries.Length; i++)
         {
-            string nickname = null;
+            if (storedEntries[i] == null)
+                return;
 
-            if (result.IsSuccess)
-            {
-                foreach (var pair in result.Value.Players)
-                {
-                    if (storedEntries[i] != null && storedEntries[i].UserId.Equals(pair.ElympicsUserId))
-                    {
-                        nickname = pair.Nickname;
-                        break;
-                    }
-                }
-            }
+            string nickname = result.Value.Players.Where(pair => storedEntries[i].UserId.Equals(pair.ElympicsUserId)).FirstOrDefault().Nickname;
 
             leaderboardVisualEntries[i].SetValues(storedEntries[i], nickname);
         }
