@@ -5,7 +5,6 @@ using MatchTcpClients.Synchronizer;
 
 public class CustomClientHandler : ElympicsMonoBehaviour, IClientHandlerGuid
 {
-    [SerializeField] private RandomManager randomManager;
     [SerializeField] private GameStateSynchronizer gameStateSynchronizer;
     [SerializeField] private ErrorPanel errorPanel;
     [SerializeField] private int timeoutSeconds = 5;

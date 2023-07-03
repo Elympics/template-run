@@ -1,9 +1,14 @@
 using Elympics;
 
-public class RandomManager : ElympicsMonoBehaviour
+public class RandomManager : ElympicsMonoBehaviour, IUpdatable
 {
     private readonly ElympicsInt randomSeed = new ElympicsInt();
     public System.Random InitializedRandom { get; private set; }
+
+    public void ElympicsUpdate()
+    {
+        ResetRandom((int)Elympics.Tick); //Using the base seed and a tick we create a temporary predictable seed
+    }
 
     public void ResetRandom(int tick)
     {

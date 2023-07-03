@@ -18,7 +18,7 @@ public class CoinCollector : MonoBehaviour
     {
         if (DoesMaskContainLayer(coinLayer, collision.gameObject.layer))
         {
-            float coinValue = difficultyManager.GetCoinValue();
+            float coinValue = difficultyManager.CoinValue;
             scoreManager.AddToScore(coinValue);
 
             collision.gameObject.SetActive(false);
