@@ -2,15 +2,16 @@
 
 public class EndGameTrigger : MonoBehaviour
 {
-    [SerializeField] private GameStateSynchronizer gameStateSynchronizer;
     [SerializeField] private LayerMask deadlyLayer;
+
+    public event System.Action OnEndGameTriggered;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (DoesMaskContainLayer(deadlyLayer, collision.collider.gameObject.layer))
         {
-            Debug.Log("DEAD");
-            gameStateSynchronizer.FinishGame();
+            Debug.Log("Game Over");
+            OnEndGameTriggered?.Invoke();
         }
     }
 

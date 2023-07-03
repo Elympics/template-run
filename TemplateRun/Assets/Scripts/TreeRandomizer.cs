@@ -9,13 +9,16 @@ public class TreeRandomizer : MonoBehaviour
 
     private void Awake()
     {
-        if (Random.Range(0, 1f) > chanceToActivate) treeObject.SetActive(false);
+        if (Random.Range(0, 1f) > chanceToActivate)
+        {
+            treeObject.SetActive(false);
+        }
         else
-        { 
+        {
             treeObject.transform.position += new Vector3(Random.Range(-randomOffsetNoise.x / 2, randomOffsetNoise.x / 2), -Random.Range(0, randomOffsetNoise.y), 0);
             treeObject.transform.localScale = Vector3.one * Random.Range(randomScaleRange.x, randomScaleRange.y);
-            if (Random.Range(0, 1f) > .5f) treeObject.GetComponent<SpriteRenderer>().flipX = true;
+            if (Random.Range(0, 1f) > .5f)
+                treeObject.GetComponent<SpriteRenderer>().flipX = true;
         }
-
     }
 }

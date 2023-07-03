@@ -1,10 +1,14 @@
-using UnityEngine;
 using Elympics;
 
-public class RandomManager : MonoBehaviour
+public class RandomManager : ElympicsMonoBehaviour, IUpdatable
 {
-    [SerializeField] private ElympicsInt randomSeed = new ElympicsInt();
+    private readonly ElympicsInt randomSeed = new ElympicsInt();
     public System.Random InitializedRandom { get; private set; }
+
+    public void ElympicsUpdate()
+    {
+        ResetRandom((int)Elympics.Tick); //Using the base seed and a tick we create a temporary predictable seed
+    }
 
     public void ResetRandom(int tick)
     {
@@ -15,5 +19,5 @@ public class RandomManager : MonoBehaviour
     public void SetSeed(int seed)
     {
         randomSeed.Value = seed;
-    }  
+    }
 }

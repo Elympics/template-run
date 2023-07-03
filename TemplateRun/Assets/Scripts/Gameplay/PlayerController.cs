@@ -31,6 +31,6 @@ public class PlayerController : ElympicsMonoBehaviour, IUpdatable, IInputHandler
 
     public void OnInputForBot(IInputWriter inputSerializer)
     {
-        //Do nothing, game doesn't have bots
+        // Do nothing, game doesn't have bots
     }
 }

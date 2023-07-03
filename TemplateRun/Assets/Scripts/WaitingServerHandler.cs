@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, IInitializable
+public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, IUpdatable
 {
     [SerializeField] private float timeForPlayersToConnect = 30f;
     [SerializeField] private float connectingTimeoutCheckDelta = 5f;
@@ -18,15 +18,14 @@ public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, I
     private int _humanPlayersNumber;
 
     private bool _gameCancelled = false;
+    private bool _isReadyLocally = false;
     private readonly ElympicsBool _gameReady = new ElympicsBool(false);
 
     public event Action OnGameReady;
     public bool IsGameReady => _gameReady.Value;
 
-    public void Initialize()
+    private void Awake()
     {
-        // We set up this event here because it is also run on every Client, unlike OnServerInit
-        _gameReady.ValueChanged += (_, _) => OnGameReady?.Invoke();
         OnGameReady += () => Debug.Log("All players are ready");
     }
 
@@ -42,13 +41,19 @@ public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, I
         _humanPlayersNumber = initialMatchPlayerDatas.Count(x => !x.IsBot);
         Debug.Log($"Game initialized with {_humanPlayersNumber} human players and {initialMatchPlayerDatas.Count - _humanPlayersNumber} bots");
 
-        byte[] data = initialMatchPlayerDatas[0].GameEngineData;
-        Debug.Log("DATA: " + Convert.ToBase64String(data));
-        int seed = BitConverter.ToInt32(data);
-        randomManager.SetSeed(seed);
-        Debug.Log("SET SEED TO: " + seed);
+        InitializeRandomnessSeed(initialMatchPlayerDatas);
 
         StartCoroutine(WaitForClientsToConnect());
+    }
+
+    private void InitializeRandomnessSeed(InitialMatchPlayerDatasGuid initialMatchPlayerDatas)
+    {
+        byte[] data = initialMatchPlayerDatas[0].GameEngineData;
+        int seed = BitConverter.ToInt32(data);
+        randomManager.SetSeed(seed);
+
+        // If you don't have External Game Backend which could provide seed on match creation, use code below instead
+        // randomManager.SetSeed(UnityEngine.Random.Range(int.MinValue, int.MaxValue));
     }
 
     private IEnumerator WaitForClientsToConnect()
@@ -66,7 +71,7 @@ public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, I
 
         EndGameForcefully("Not all players have connected, therefore the game cannot start and so it ends");
     }
-    
+
     public void OnPlayerDisconnected(ElympicsPlayer player)
     {
         if (!IsEnabledAndActive)
@@ -113,9 +118,15 @@ public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, I
         Elympics.EndGame();
     }
 
-    // This Unity event method is necessary for the script to have a checkbox in Inspector.
-    // https://forum.unity.com/threads/why-do-some-components-have-enable-disable-checkboxes-in-the-inspector-while-others-dont.390770/#post-2547484
-    // ReSharper disable once Unity.RedundantEventFunction
-    private void Start()
-    { }
+    public void ElympicsUpdate()
+    {
+        if (_isReadyLocally)
+            return;
+
+        if (!_gameReady.Value)
+            return;
+
+        OnGameReady?.Invoke();
+        _isReadyLocally = true;
+    }
 }

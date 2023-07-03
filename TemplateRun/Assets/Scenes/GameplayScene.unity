@@ -179,7 +179,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &98069379
 PrefabInstance:
@@ -218,7 +218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9215224323801974365, guid: 9eef54e4aab171f43b730982c0cd04f1, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9215224323801974365, guid: 9eef54e4aab171f43b730982c0cd04f1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -494,11 +494,12 @@ MonoBehaviour:
   gameStateSynchronizer: {fileID: 1174724765}
   scoreManager: {fileID: 390863610}
   leaderboardsDisplayer: {fileID: 986447083}
-  endGameScreenObject: {fileID: 1054521673}
+  endGameScreenObject: {fileID: 152501004}
   scoreText: {fileID: 1392918777}
   highscoreIndicators:
   - {fileID: 590971111}
   - {fileID: 945800642}
+  activationDelay: 1.5
 --- !u!114 &152501007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,8 +1059,7 @@ Transform:
   m_LocalPosition: {x: 13.9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1455436740}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2293,7 +2293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2364,8 +2364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274cc48157dbfa94c8cc305c8a902a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 714687555}
   coinList: []
+  EndPoint: {fileID: 714687555}
   assignedDestroyX: -30
   assignedMapManager: {fileID: 390863606}
 --- !u!1 &722212479
@@ -2950,7 +2950,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3021,8 +3021,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274cc48157dbfa94c8cc305c8a902a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 965341958}
   coinList: []
+  EndPoint: {fileID: 965341958}
   assignedDestroyX: -30
   assignedMapManager: {fileID: 390863606}
 --- !u!1001 &986447081
@@ -3126,7 +3126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 886656289059358155, guid: 4a6961e13c864574da5563caf63fc023, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -48.074284
+      value: -48.07428
       objectReference: {fileID: 0}
     - target: {fileID: 4526064350805014918, guid: 4a6961e13c864574da5563caf63fc023, type: 3}
       propertyPath: m_IsActive
@@ -3752,7 +3752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverHandler: {fileID: 1689713964}
-  gameStateSynchronizer: {fileID: 1174724765}
   countdownText: {fileID: 418335452}
   secondsToStartAfterConnection: 3
 --- !u!114 &1174724765
@@ -3767,6 +3766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eac14b0b73858f4d9289f6f765e5c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStartCountdown: {fileID: 1174724764}
+  endGameTrigger: {fileID: 1176762619}
   scoreManager: {fileID: 390863610}
 --- !u!114 &1174724766
 MonoBehaviour:
@@ -3824,7 +3825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af25aefb8433814185d9d24775f1a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomManager: {fileID: 1455436738}
   gameStateSynchronizer: {fileID: 1174724765}
   errorPanel: {fileID: 1728422357}
   timeoutSeconds: 5
@@ -4089,7 +4089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16122ad738d7424792407f1184b68a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameStateSynchronizer: {fileID: 1174724765}
   deadlyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -4338,7 +4337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4420,8 +4419,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274cc48157dbfa94c8cc305c8a902a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 1363177385}
   coinList: []
+  EndPoint: {fileID: 1363177385}
   assignedDestroyX: -30
   assignedMapManager: {fileID: 390863606}
 --- !u!1 &1392918775
@@ -4854,8 +4853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e50432865df6c45889baef0bd4feea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomSeed:
-    currentValue: 0
 --- !u!114 &1455436739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4871,7 +4868,7 @@ MonoBehaviour:
   forceNetworkId: 0
   networkId: 16
   predictableFor:
-    playerIndex: -2
+    playerIndex: -3
   isUpdatableForNonOwners: 0
   visibleFor:
     playerIndex: -3
@@ -4892,13 +4889,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455436737}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.9, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 390863608}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1674243474
 PrefabInstance:
@@ -4909,7 +4906,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4038678426090251082, guid: 3cdf86a27de66234b9a3326606f73313, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4038678426090251082, guid: 3cdf86a27de66234b9a3326606f73313, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5020,6 +5017,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7761056987631085800, guid: f96262bc694c229408688203398b88ed, type: 3}
+      propertyPath: predictableFor.playerIndex
+      value: -3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f96262bc694c229408688203398b88ed, type: 3}
 --- !u!1 &1689713963 stripped
@@ -5056,7 +5057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5127,8 +5128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274cc48157dbfa94c8cc305c8a902a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 1694646643}
   coinList: []
+  EndPoint: {fileID: 1694646643}
   assignedDestroyX: -30
   assignedMapManager: {fileID: 390863606}
 --- !u!1001 &1728422355
@@ -5304,7 +5305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5375,8 +5376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274cc48157dbfa94c8cc305c8a902a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 1736725959}
   coinList: []
+  EndPoint: {fileID: 1736725959}
   assignedDestroyX: -30
   assignedMapManager: {fileID: 390863606}
 --- !u!1 &1799272842
@@ -5502,11 +5503,9 @@ MonoBehaviour:
   gameStateSynchronizer: {fileID: 1174724765}
   deathFreezeDuration: 0.25
   deathBounceInitialSpeed: 5
-  deathScreenActivateDelay: 1.5
   deathBounceNoise: {x: 0.5, y: 0.5}
   deathSprite: {fileID: 360173372}
   playerSpriteRenderer: {fileID: 1799272844}
-  endGameScreen: {fileID: 152501004}
   deathSpriteGravity: 12
 --- !u!1001 &1823518715
 PrefabInstance:
@@ -5521,7 +5520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3135050632119917241, guid: 8a99b6ad9f1b2e0419c4b80da1daf306, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5592,8 +5591,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274cc48157dbfa94c8cc305c8a902a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 1823518717}
   coinList: []
+  EndPoint: {fileID: 1823518717}
   assignedDestroyX: -30
   assignedMapManager: {fileID: 390863606}
 --- !u!1001 &1841866265
@@ -5609,7 +5608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1083271756048798012, guid: 0697e0d82f945a146a70c551cd474890, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 1083271756048798012, guid: 0697e0d82f945a146a70c551cd474890, type: 3}
       propertyPath: m_LocalPosition.x

@@ -5,7 +5,6 @@ using MatchTcpClients.Synchronizer;
 
 public class CustomClientHandler : ElympicsMonoBehaviour, IClientHandlerGuid
 {
-    [SerializeField] private RandomManager randomManager;
     [SerializeField] private GameStateSynchronizer gameStateSynchronizer;
     [SerializeField] private ErrorPanel errorPanel;
     [SerializeField] private int timeoutSeconds = 5;
@@ -26,11 +25,6 @@ public class CustomClientHandler : ElympicsMonoBehaviour, IClientHandlerGuid
         timeoutThreshold = data.UnreliableLastReceivedPingDateTime + new TimeSpan(0, 0, timeoutSeconds);
     }
 
-    public void OnStandaloneClientInit(InitialMatchPlayerDataGuid data)
-    {
-        randomManager.SetSeed(BitConverter.ToInt32(data.GameEngineData));
-    }
-
     private void Update()
     {
         if (timeoutThreshold != null && timeoutThreshold < DateTime.Now && gameStateSynchronizer.GameState != GameState.GameEnded)
@@ -49,6 +43,7 @@ public class CustomClientHandler : ElympicsMonoBehaviour, IClientHandlerGuid
     }
 
     #region Unused
+    public void OnStandaloneClientInit(InitialMatchPlayerDataGuid data) { }
     public void OnDisconnectedByClient() { }
     public void OnClientsOnServerInit(InitialMatchPlayerDatasGuid data) { }
     public void OnDisconnectedByServer() { }

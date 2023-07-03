@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 public class StageHandler : ElympicsMonoBehaviour, IUpdatable
 {
-    public Transform endPoint; //Point at which next stage will be instantiated
+    [SerializeField] private List<GameObject> coinList = new List<GameObject>();
+
     protected float destroyX;
     protected MapManager mapManager;
-    [SerializeField] private List<GameObject> coinList = new List<GameObject>();
+
+    public Transform EndPoint; //Point at which next stage will be instantiated
 
     public void InitializeStage(Vector3 position, float stageDestroyX, MapManager givenMapManager, int randomInt)
     {
@@ -34,9 +36,15 @@ public class StageHandler : ElympicsMonoBehaviour, IUpdatable
 
     public void ElympicsUpdate()
     {
-        if (mapManager == null) mapManager = FindObjectOfType<MapManager>(); //If the object was destroyed before reconciliation, it might be missing the reference during the resimulation
-        if (!mapManager.IsRunning) return;
-        MoveStage(mapManager.CurrentSpeed * Vector2.left * Elympics.TickDuration);
-        if (endPoint.position.x < destroyX) DestroyStage();
+        if (mapManager == null)
+            mapManager = FindObjectOfType<MapManager>(); //If the object was destroyed before reconciliation, it might be missing the reference during the resimulation
+
+        if (!mapManager.IsRunning)
+            return;
+
+        MoveStage(Elympics.TickDuration * mapManager.CurrentSpeed * Vector2.left);
+
+        if (EndPoint.position.x < destroyX)
+            DestroyStage();
     }
 }

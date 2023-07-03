@@ -67,12 +67,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09be7c920f9a4c48b7a9f9e4be98177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 3135050632960072937}
   coinList:
   - {fileID: 8786816010209914845}
   - {fileID: 7169610071273876450}
   - {fileID: 7320475856198838759}
   - {fileID: 1668039123943737117}
+  EndPoint: {fileID: 3135050632960072937}
 --- !u!114 &3135050632119917239
 MonoBehaviour:
   m_ObjectHideFlags: 0
