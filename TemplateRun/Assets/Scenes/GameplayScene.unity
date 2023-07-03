@@ -3752,7 +3752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverHandler: {fileID: 1689713964}
-  gameStateSynchronizer: {fileID: 1174724765}
   countdownText: {fileID: 418335452}
   secondsToStartAfterConnection: 3
 --- !u!114 &1174724765
@@ -3767,6 +3766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eac14b0b73858f4d9289f6f765e5c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStartCountdown: {fileID: 1174724764}
+  endGameTrigger: {fileID: 1176762619}
   scoreManager: {fileID: 390863610}
 --- !u!114 &1174724766
 MonoBehaviour:
@@ -4089,7 +4090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16122ad738d7424792407f1184b68a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameStateSynchronizer: {fileID: 1174724765}
   deadlyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -4854,8 +4854,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e50432865df6c45889baef0bd4feea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomSeed:
-    currentValue: 0
 --- !u!114 &1455436739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5019,6 +5017,10 @@ PrefabInstance:
     - target: {fileID: 7529846740173844775, guid: f96262bc694c229408688203398b88ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761056987631085800, guid: f96262bc694c229408688203398b88ed, type: 3}
+      propertyPath: predictableFor.playerIndex
+      value: -3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f96262bc694c229408688203398b88ed, type: 3}
