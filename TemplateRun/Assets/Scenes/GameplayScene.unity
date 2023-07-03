@@ -494,7 +494,7 @@ MonoBehaviour:
   gameStateSynchronizer: {fileID: 1174724765}
   scoreManager: {fileID: 390863610}
   leaderboardsDisplayer: {fileID: 986447083}
-  endGameScreenObject: {fileID: 1054521673}
+  endGameScreenObject: {fileID: 152501004}
   scoreText: {fileID: 1392918777}
   highscoreIndicators:
   - {fileID: 590971111}
@@ -3126,7 +3126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 886656289059358155, guid: 4a6961e13c864574da5563caf63fc023, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -48.074284
+      value: -48.07428
       objectReference: {fileID: 0}
     - target: {fileID: 4526064350805014918, guid: 4a6961e13c864574da5563caf63fc023, type: 3}
       propertyPath: m_IsActive

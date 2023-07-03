@@ -167,7 +167,7 @@ public class LeaderboardsDisplayer : MonoBehaviour
             if (storedEntries[i] == null)
                 return;
 
-            string nickname = result.Value.Players.Where(pair => storedEntries[i].UserId.Equals(pair.ElympicsUserId)).FirstOrDefault().Nickname;
+            string nickname = result.Value.Players.Where(pair => storedEntries[i].UserId.Equals(pair.ElympicsUserId)).FirstOrDefault()?.Nickname;
 
             leaderboardVisualEntries[i].SetValues(storedEntries[i], nickname);
         }

@@ -154,7 +154,7 @@ public class SoundManager : MonoBehaviour
         {
             jumpManager = FindObjectOfType<JumpManager>();
             FindObjectOfType<GameStateSynchronizer>().SubscribeToGameStateChange(AdjustToGameState);
-            FindObjectOfType<CoinCollector>().SubscribeToCoinPickedUp(PlayCoinSound);
+            FindObjectOfType<CoinCollector>().OnCoinPickedUp += PlayCoinSound;
         }
     }
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +18,8 @@ public class BackgroundMover : MonoBehaviour
 
     private void Start()
     {
-        if (gameStateSynchronizer != null) gameStateSynchronizer.SubscribeToGameStateChange(AdjustToGameState);
+        if (gameStateSynchronizer != null)
+            gameStateSynchronizer.SubscribeToGameStateChange(AdjustToGameState);
     }
 
     private void AdjustToGameState(int oldState, int newState)
@@ -31,15 +31,16 @@ public class BackgroundMover : MonoBehaviour
     {
         if (!shouldMove) return;
 
-        Vector3 moveVector = Vector3.left * backgroundSpeed * Time.deltaTime;
-        foreach(var tile in backgroundTiles) tile.tileTransform.position += moveVector;
+        Vector3 moveVector = backgroundSpeed * Time.deltaTime * Vector3.left;
+        foreach (var tile in backgroundTiles)
+            tile.tileTransform.position += moveVector;
 
-        for(int i = 0; i < backgroundTiles.Count; i++)
+        for (int i = 0; i < backgroundTiles.Count; i++)
         {
             var tile = backgroundTiles[i];
             if (tile.tileEndTransform.position.x <= leftScreenBorder)
             {
-                int nextIndex = i-1;
+                int nextIndex = i - 1;
                 if (i == 0) nextIndex = backgroundTiles.Count - 1;
                 tile.tileTransform.position = backgroundTiles[nextIndex].tileEndTransform.position;
             }
