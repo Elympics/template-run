@@ -427,8 +427,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1083271756048798011}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+      - m_Target: {fileID: 6401468560703983376}
+        m_TargetAssemblyTypeName: SoundSettingsManager, Assembly-CSharp
         m_MethodName: ChangeMute
         m_Mode: 1
         m_Arguments:
@@ -563,8 +563,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1083271756048798011}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+      - m_Target: {fileID: 6401468560703983376}
+        m_TargetAssemblyTypeName: SoundSettingsManager, Assembly-CSharp
         m_MethodName: ChangeMenuActive
         m_Mode: 6
         m_Arguments:
@@ -810,8 +810,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1083271756048798011}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+      - m_Target: {fileID: 6401468560703983376}
+        m_TargetAssemblyTypeName: SoundSettingsManager, Assembly-CSharp
         m_MethodName: ChangeMenuActive
         m_Mode: 6
         m_Arguments:
@@ -1130,8 +1130,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1083271756048798011}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+      - m_Target: {fileID: 6401468560703983376}
+        m_TargetAssemblyTypeName: SoundSettingsManager, Assembly-CSharp
         m_MethodName: UpdateToSlider
         m_Mode: 1
         m_Arguments:
@@ -1357,8 +1357,8 @@ RectTransform:
   - {fileID: 2098446291}
   - {fileID: 909245917}
   - {fileID: 287154237}
-  m_Father: {fileID: 1083271756048798012}
-  m_RootOrder: 10
+  m_Father: {fileID: 1081677341721318371}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2283,7 +2283,7 @@ Transform:
   - {fileID: 1083271756766320575}
   - {fileID: 1083271756476549318}
   - {fileID: 1083271755159063747}
-  - {fileID: 1590188447}
+  - {fileID: 1081677341721318371}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2299,14 +2299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb9ac1b91fcfe2488e6bc590437fc07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeSlider: {fileID: 1279554461}
-  soundOffIcon: {fileID: 1333283659}
-  soundOnIcon: {fileID: 68590452}
-  backGround: {fileID: 2098446290}
-  openSettingsButton: {fileID: 706101022}
-  closeSettingsButton: {fileID: 287154236}
-  soundOptions: {fileID: 909245916}
-  currentVolume: 0.5
+  soundSettings: {fileID: 6401468560703983376}
   menuMusic:
   - {fileID: 1083271756914363203}
   - {fileID: 4764651017469948265}
@@ -2835,6 +2828,60 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5655859035660872739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1081677341721318371}
+  - component: {fileID: 6401468560703983376}
+  m_Layer: 0
+  m_Name: SoundSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1081677341721318371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655859035660872739}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1590188447}
+  m_Father: {fileID: 1083271756048798012}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6401468560703983376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655859035660872739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcc912104260304fa89a35e33409e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundManager: {fileID: 1083271756048798011}
+  volumeSlider: {fileID: 1279554461}
+  soundOffIcon: {fileID: 1333283659}
+  soundOnIcon: {fileID: 68590452}
+  backGround: {fileID: 2098446290}
+  openSettingsButton: {fileID: 706101022}
+  closeSettingsButton: {fileID: 287154236}
+  soundOptions: {fileID: 909245916}
+  currentVolume: 0.5
 --- !u!1 &7091222572731721378
 GameObject:
   m_ObjectHideFlags: 0

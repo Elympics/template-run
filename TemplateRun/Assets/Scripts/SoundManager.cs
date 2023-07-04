@@ -6,14 +6,10 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private Slider volumeSlider;
-    [SerializeField] private GameObject soundOffIcon;
-    [SerializeField] private GameObject soundOnIcon;
-    [SerializeField] private GameObject backGround;
-    [SerializeField] private GameObject openSettingsButton;
-    [SerializeField] private GameObject closeSettingsButton;
-    [SerializeField] private GameObject soundOptions;
-    [SerializeField][Range(0f, 1f)] private float currentVolume = 0.5f;
+    public static SoundManager Instance;
+
+    [Header("Sound settings")]
+    [SerializeField] private SoundSettingsManager soundSettings;
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource[] menuMusic;
@@ -29,14 +25,17 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private float gameplayLoopDuration;
     [SerializeField] private float resultsLoopDuration;
 
-    private float defaultVolume = 0.5f;
-    private float loopedMusicTimer;
-    bool playingALoop;
-    bool mute;
-    private bool isOnMenuScene = true;
-    private bool gameOver;
+    private float loopedMusicTimer = 0;
+    private bool playingALoop = true;
+
+    private enum MusicGameState { menu, gameplay, results }
+    private MusicGameState gameState = MusicGameState.menu;
+
+    private JumpManager jumpManager = null;
     private bool wasGrounded;
 
+    #region defaultSoundValues
+    private static readonly float DefaultVolume = 0.5f;
     private float menuDefaultVolume;
     private float gameplayDefaultVolume;
     private float resultsDefaultVolume;
@@ -44,84 +43,75 @@ public class SoundManager : MonoBehaviour
     private float landDefaultVolume;
     private float coinDefaultVolume;
     private float gameoverDefaultVolume;
+    #endregion
 
-
-
-    private JumpManager jumpManager = null;
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void SetUpOnAwake()
     {
         menuMusic[0].Play();
-        loopedMusicTimer = 0;
-        playingALoop = true;
         SaveDefaultVolumes();
     }
-
     private void SaveDefaultVolumes()
     {
-        menuDefaultVolume = menuMusic[0].volume / defaultVolume;
-        gameplayDefaultVolume = gameplayMusic[0].volume / defaultVolume;
-        resultsDefaultVolume = resultsMusic[0].volume / defaultVolume;
-        jumpDefaultVolume = jumpSound.volume / defaultVolume;
-        landDefaultVolume = landSound.volume / defaultVolume;
-        coinDefaultVolume = coinSound.volume / defaultVolume;
-        landDefaultVolume = landSound.volume / defaultVolume;
-        gameoverDefaultVolume = gameOverSound.volume / defaultVolume;
-    }
-
-    private void SetVolume(float newVolume)
-    {
-        menuMusic[0].volume = menuDefaultVolume * newVolume;
-        menuMusic[1].volume = menuDefaultVolume * newVolume;
-        gameplayMusic[0].volume = gameplayDefaultVolume * newVolume;
-        gameplayMusic[1].volume = gameplayDefaultVolume * newVolume;
-        resultsMusic[0].volume = resultsDefaultVolume * newVolume;
-        resultsMusic[1].volume = resultsDefaultVolume * newVolume;
-        jumpSound.volume = jumpDefaultVolume * newVolume;
-        landSound.volume = landDefaultVolume * newVolume;
-        coinSound.volume = coinDefaultVolume * newVolume;
-        gameOverSound.volume = gameoverDefaultVolume * newVolume;
+        menuDefaultVolume = menuMusic[0].volume / DefaultVolume;
+        gameplayDefaultVolume = gameplayMusic[0].volume / DefaultVolume;
+        resultsDefaultVolume = resultsMusic[0].volume / DefaultVolume;
+        jumpDefaultVolume = jumpSound.volume / DefaultVolume;
+        landDefaultVolume = landSound.volume / DefaultVolume;
+        coinDefaultVolume = coinSound.volume / DefaultVolume;
+        landDefaultVolume = landSound.volume / DefaultVolume;
+        gameoverDefaultVolume = gameOverSound.volume / DefaultVolume;
     }
 
     private void Update()
     {
         ManagedLoopedMusic();
 
-        if (isOnMenuScene) return;
+        if (gameState == MusicGameState.menu) return;
         ManageGameplaySounds();
     }
 
     private void ManagedLoopedMusic()
     {
         loopedMusicTimer += Time.deltaTime;
-        int state = isOnMenuScene ? 0 : (gameOver ? 2 : 1);
         float durationToCheck = 0;
-        switch (state){
-            case 0:
-                durationToCheck = menuLoopDuration;              
+        switch (gameState)
+        {
+            case MusicGameState.menu:
+                durationToCheck = menuLoopDuration;
                 break;
-            case 1:
+            case MusicGameState.gameplay:
                 durationToCheck = gameplayLoopDuration;
                 break;
-            case 2:
+            case MusicGameState.results:
                 durationToCheck = resultsLoopDuration;
                 break;
         }
 
-        if(loopedMusicTimer >= durationToCheck)
+        if (loopedMusicTimer >= durationToCheck)
         {
             loopedMusicTimer = 0;
             int indexToPlay = playingALoop ? 1 : 0;
-            
-            switch (state)
+
+            switch (gameState)
             {
-                case 0:
+                case MusicGameState.menu:
                     menuMusic[indexToPlay].Play();
                     break;
-                case 1:
+                case MusicGameState.gameplay:
                     gameplayMusic[indexToPlay].Play();
                     break;
-                case 2:
+                case MusicGameState.results:
                     resultsMusic[indexToPlay].Play();
                     break;
             }
@@ -129,17 +119,51 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
-    public void AdjustMusicToScene(Scene newScene)
+    private void ManageGameplaySounds()
     {
-        isOnMenuScene = newScene.buildIndex == 0;
-
-        if (isOnMenuScene)
+        if (gameState == MusicGameState.results) return;
+        if (jumpManager.IsGrounded())
         {
-            SetupMenuMusic();
+            if (!wasGrounded)
+            {
+                landSound.volume = soundSettings.CurrentVolume * landDefaultVolume;
+                landSound.Play();
+            }
+            wasGrounded = true;
         }
         else
         {
+            if (wasGrounded && jumpManager.PlayerRigidbody.velocity.y > 0)
+            {
+                jumpSound.volume = soundSettings.CurrentVolume * jumpDefaultVolume;
+                jumpSound.Play();
+            }
+            wasGrounded = false;
+        }
+    }
+
+    public void SetMusicVolume(float newVolume)
+    {
+        menuMusic[0].volume = menuDefaultVolume * newVolume;
+        menuMusic[1].volume = menuDefaultVolume * newVolume;
+        gameplayMusic[0].volume = gameplayDefaultVolume * newVolume;
+        gameplayMusic[1].volume = gameplayDefaultVolume * newVolume;
+        resultsMusic[0].volume = resultsDefaultVolume * newVolume;
+        resultsMusic[1].volume = resultsDefaultVolume * newVolume;
+    }
+
+    public void AdjustMusicToScene(Scene newScene)
+    {
+        bool isOnMenuScene = newScene.buildIndex == 0;
+
+        if (isOnMenuScene)
+        {
+            gameState = MusicGameState.menu;
+            PlayAndStopOthers(menuMusic[0]);
+        }
+        else
+        {
+            gameState = MusicGameState.gameplay;
             jumpManager = FindObjectOfType<JumpManager>();
             FindObjectOfType<GameStateSynchronizer>().SubscribeToGameStateChange(AdjustToGameState);
             FindObjectOfType<CoinCollector>().SubscribeToCoinPickedUp(PlayCoinSound);
@@ -148,58 +172,30 @@ public class SoundManager : MonoBehaviour
 
     public void SetUpMusic()
     {
-        if (isOnMenuScene) SetupMenuMusic();
-        else SetupGameplayMusic();
+        if (gameState == MusicGameState.menu) PlayAndStopOthers(menuMusic[0]);
+        else PlayAndStopOthers(gameplayMusic[0]);
     }
 
-    private void SetupMenuMusic()
-    {
-        menuMusic[0].Play();
-        gameplayMusic[0].Stop();
-        gameplayMusic[1].Stop();
-        resultsMusic[0].Stop();
-        resultsMusic[1].Stop();
-        gameOverSound.Stop();
-        coinSound.Stop();
-        jumpSound.Stop();
-        landSound.Stop();
-        playingALoop = true;
-        loopedMusicTimer = 0;
-    }
-
-    private void SetupGameplayMusic()
+    private void PlayAndStopOthers(AudioSource sourceToPlay)
     {
         menuMusic[0].Stop();
         menuMusic[1].Stop();
         resultsMusic[0].Stop();
         resultsMusic[1].Stop();
-        gameplayMusic[0].Play();
+        gameplayMusic[0].Stop();
         gameplayMusic[1].Stop();
+        gameOverSound.Stop();
+        sourceToPlay.Play();
         playingALoop = true;
         loopedMusicTimer = 0;
     }
 
-
-    private void ManageGameplaySounds()
-    {
-        if (gameOver) return;
-        if (jumpManager.IsGrounded())
-        {
-            if (!wasGrounded) landSound.Play();
-            wasGrounded = true;
-        }
-        else
-        {
-            if (wasGrounded && jumpManager.PlayerRigidbody.velocity.y > 0) jumpSound.Play();
-            wasGrounded = false;
-        }
-    }
-
     private void PlayGameOverSound()
     {
-        gameOver = true;
+        gameState = MusicGameState.results;
         gameplayMusic[0].Stop();
         gameplayMusic[1].Stop();
+        gameOverSound.volume = soundSettings.CurrentVolume * gameoverDefaultVolume;
         gameOverSound.Play();
         resultsMusic[0].PlayDelayed(gameOverSound.clip.length);
         loopedMusicTimer = -gameOverSound.clip.length;
@@ -209,39 +205,12 @@ public class SoundManager : MonoBehaviour
     private void AdjustToGameState(int oldState, int newState)
     {
         if ((GameState)newState == GameState.GameEnded) PlayGameOverSound();
-        else gameOver = false;
+        else gameState = MusicGameState.gameplay;
     }
 
     private void PlayCoinSound()
     {
+        coinSound.volume = soundSettings.CurrentVolume * coinDefaultVolume;
         coinSound.Play();
-    }
-
-    public void ChangeMute()
-    {
-        mute = !mute;
-        soundOffIcon.SetActive(mute);
-        soundOnIcon.SetActive(!mute);
-        if (mute) SetVolume(0);
-        else SetVolume(currentVolume);
-    }
-
-    public void UpdateToSlider()
-    {
-        if(volumeSlider.value == 0 && !mute) ChangeMute();
-        else
-        {
-            currentVolume = volumeSlider.value;
-            if (mute) ChangeMute();
-            else SetVolume(currentVolume);
-        }
-    }
-
-    public void ChangeMenuActive(bool active)
-    {
-        openSettingsButton.SetActive(!active);
-        backGround.SetActive(active);
-        soundOptions.SetActive(active);
-        closeSettingsButton.SetActive(active);
     }
 }

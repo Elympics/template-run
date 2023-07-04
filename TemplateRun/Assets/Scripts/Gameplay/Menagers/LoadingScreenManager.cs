@@ -26,21 +26,20 @@ public class LoadingScreenManager : MonoBehaviour
     [SerializeField] private float messageSlideDuration;
     [SerializeField] private Vector2 targetMessageOffset;
 
-    private bool isOpen;
-    private bool wasOpen;
+    private bool isOpen = true;
+    private bool wasOpen = true;
     private bool slideInProgress;
     private float slideTimer;
     private bool slidingDown;
     private float shadeTimer;
-    private int messageState;
+    private enum MessageState { hidden, movingIn, stay, movingOut }
+    private MessageState messageState;
     private float messageTimer;
     private int messageIndex;
-
+    private static readonly Color Transparent = new Color(1, 1, 1, 0);
     public void SetUpOnAwake()
     {
         OpenSlider();
-        isOpen = true;
-        wasOpen = true;
     }
 
     public void AdjustToSceneLoaded(Scene scene)
@@ -101,16 +100,16 @@ public class LoadingScreenManager : MonoBehaviour
     {
         slideTimer += Time.deltaTime;
         float slidePercent = slideTimer / slideDuration;
-        if(slidePercent > 1)
+        if (slidePercent > 1)
         {
             slideInProgress = false;
             darkTint.SetActive(slidingDown);
             sliderTopPart.gameObject.SetActive(false);
             sliderBottomPart.gameObject.SetActive(false);
             loadingTransform.gameObject.SetActive(slidingDown);
-            if(slidingDown)
+            if (slidingDown)
             {
-                dogHead.color = new Color(1, 1, 1, 0);
+                dogHead.color = Transparent;
                 shadeTimer = 0;
                 loadingTransform.localScale = Vector3.zero;
             }
@@ -119,13 +118,13 @@ public class LoadingScreenManager : MonoBehaviour
 
         if (!slidingDown) slidePercent = 1 - slidePercent;
         sliderTopPart.value = slidePercent / 2;
-        sliderBottomPart.value = slidePercent / 2;        
+        sliderBottomPart.value = slidePercent / 2;
     }
 
     private void ProcessLoadingSign()
     {
         loadingTransform.eulerAngles = new Vector3(0, 0, loadingTransform.eulerAngles.z - rotationSpeed * Time.deltaTime);
-        if(shadeTimer < shadeDuration)
+        if (shadeTimer < shadeDuration)
         {
             shadeTimer += Time.deltaTime;
             if (shadeTimer > shadeDuration)
@@ -144,16 +143,16 @@ public class LoadingScreenManager : MonoBehaviour
     {
         switch (messageState)
         {
-            case 0:
+            case MessageState.hidden:
                 SpawnMessage();
                 break;
-            case 1:
+            case MessageState.movingIn:
                 ProcessMessageMovingIn();
                 break;
-            case 2:
+            case MessageState.stay:
                 ProcessMessageStay();
                 break;
-            case 3:
+            case MessageState.movingOut:
                 ProcessMessageMovingOut();
                 break;
         }
@@ -163,9 +162,9 @@ public class LoadingScreenManager : MonoBehaviour
         message.text = messageList[messageIndex];
         messageIndex++;
         if (messageIndex == messageList.Count) messageIndex = 0;
-        loadingMessageTransform.anchoredPosition = new Vector2( Screen.width / 2 + targetMessageOffset.x, targetMessageOffset.y);
+        loadingMessageTransform.anchoredPosition = new Vector2(Screen.width / 2 + targetMessageOffset.x, targetMessageOffset.y);
         message.alpha = 0;
-        SetMessageState(1);
+        messageState = MessageState.movingIn;
     }
 
     private void ProcessMessageMovingIn()
@@ -173,13 +172,13 @@ public class LoadingScreenManager : MonoBehaviour
         messageTimer += Time.deltaTime;
         float slideProgress = messageTimer / messageSlideDuration;
         if (slideProgress > 1) slideProgress = 1;
-        loadingMessageTransform.anchoredPosition = new Vector2( Screen.width / 2 * (1- slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
+        loadingMessageTransform.anchoredPosition = new Vector2(Screen.width / 2 * (1 - slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
         message.alpha = slideProgress;
 
-        if(slideProgress == 1)
+        if (slideProgress == 1)
         {
             messageTimer = 0;
-            SetMessageState(2);
+            messageState = MessageState.stay;
         }
     }
 
@@ -187,10 +186,10 @@ public class LoadingScreenManager : MonoBehaviour
     {
         messageTimer += Time.deltaTime;
         float stayDuration = (messageIndex > 2) ? shortMessageStayDuration : messageStayDuration;
-        if(messageTimer > stayDuration)
+        if (messageTimer > stayDuration)
         {
             messageTimer = 0;
-            SetMessageState(3);
+            messageState = MessageState.movingOut;
         }
     }
     private void ProcessMessageMovingOut()
@@ -198,18 +197,13 @@ public class LoadingScreenManager : MonoBehaviour
         messageTimer += Time.deltaTime;
         float slideProgress = 1 - (messageTimer / messageSlideDuration);
         if (slideProgress < 0) slideProgress = 0;
-        loadingMessageTransform.anchoredPosition = new Vector2( -Screen.width / 2 * (1 - slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
+        loadingMessageTransform.anchoredPosition = new Vector2(-Screen.width / 2 * (1 - slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
         message.alpha = slideProgress;
 
         if (slideProgress == 0)
         {
             messageTimer = 0;
-            SetMessageState(0);
+            messageState = MessageState.hidden;
         }
-    }
-
-    private void SetMessageState(int state)
-    {
-        messageState = state;
     }
 }
