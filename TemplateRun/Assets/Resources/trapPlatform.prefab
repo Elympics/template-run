@@ -63,8 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09be7c920f9a4c48b7a9f9e4be98177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 3135050632960072937}
   coinList: []
+  EndPoint: {fileID: 3135050632960072937}
 --- !u!114 &3135050632119917239
 MonoBehaviour:
   m_ObjectHideFlags: 0

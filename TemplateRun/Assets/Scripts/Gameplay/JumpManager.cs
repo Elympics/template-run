@@ -73,11 +73,10 @@ public class JumpManager : ElympicsMonoBehaviour
 
     public bool IsGrounded()
     {
-
         Collider2D[] hits = Physics2D.OverlapBoxAll(playerRigidBody.position + GroundCheckOffset * Vector2.down, PlayerSizeScaled, 0, groundMask);
         foreach (var hit in hits)
         {
-            if (hit.TryGetComponent<PlatformEffector2D>(out var platformEffector))
+            if (hit.TryGetComponent<PlatformEffector2D>(out var _))
             {
                 if (hit.bounds.max.y <= playerCollider.bounds.min.y) return true;
             }

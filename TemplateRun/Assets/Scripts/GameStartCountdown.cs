@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 public class GameStartCountdown : ElympicsMonoBehaviour, IUpdatable, IInitializable
 {
     [SerializeField] private WaitingServerHandler serverHandler;
-    [SerializeField] private GameStateSynchronizer gameStateSynchronizer;
 
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private int secondsToStartAfterConnection = 3;
@@ -14,10 +13,11 @@ public class GameStartCountdown : ElympicsMonoBehaviour, IUpdatable, IInitializa
     private bool countdownStarted = false;
     private readonly ElympicsFloat timeToStart = new ElympicsFloat();
 
+    public event System.Action OnCountdownEnded;
+
     private void Awake()
     {
         Assert.IsNotNull(serverHandler);
-        Assert.IsNotNull(gameStateSynchronizer);
         Assert.IsNotNull(countdownText);
         Assert.IsFalse(secondsToStartAfterConnection < 0);
     }
@@ -49,7 +49,7 @@ public class GameStartCountdown : ElympicsMonoBehaviour, IUpdatable, IInitializa
             // Game start
             countdownStarted = false;
             countdownText.gameObject.SetActive(false);
-            gameStateSynchronizer.StartGame();
+            OnCountdownEnded?.Invoke();
         }
     }
 }

@@ -16,6 +16,9 @@ public class EndGameScreenController : ElympicsMonoBehaviour, IInitializable
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject[] highscoreIndicators;
 
+    [SerializeField] private float activationDelay = 1.5f;
+
+
     public void Initialize()
     {
         gameStateSynchronizer.SubscribeToGameStateChange(DisplayAtGameEnded);
@@ -26,10 +29,15 @@ public class EndGameScreenController : ElympicsMonoBehaviour, IInitializable
     {
         if ((GameState)newState == GameState.GameEnded)
         {
-            scoreText.text = scoreManager.GetDisplayableScore();
-            endGameScreenObject.SetActive(true);
             leaderboardsDisplayer.InitializeAndRun();
+            Invoke(nameof(ActivateEndGameScreen), activationDelay);
         }
+    }
+
+    private void ActivateEndGameScreen()
+    {
+        scoreText.text = scoreManager.GetDisplayableScore();
+        endGameScreenObject.SetActive(true);
     }
 
     private void TryDisplayHighScoreEffects(LeaderboardEntry leaderboardEntry)

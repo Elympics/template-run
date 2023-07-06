@@ -9,11 +9,9 @@ public class AnimationManager : MonoBehaviour
     [Header("DeathAnimation")]
     [SerializeField] private float deathFreezeDuration;
     [SerializeField] private float deathBounceInitialSpeed;
-    [SerializeField] private float deathScreenActivateDelay;
     [SerializeField] private Vector2 deathBounceNoise;
     [SerializeField] private GameObject deathSprite;
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
-    [SerializeField] private GameObject endGameScreen;
     [SerializeField] private float deathSpriteGravity;
     private Vector2 currentSpriteVelocity;
     private bool dead = false;
@@ -25,9 +23,13 @@ public class AnimationManager : MonoBehaviour
         gameStateSynchronizer.SubscribeToGameStateChange(PlayDeathAnimation);
         deathSpriteTransform = deathSprite.GetComponent<Transform>();
     }
-    void Update()
+
+    private void Update()
     {
-        if (dead) SimulateDeathBounce(Time.deltaTime);
+        if (dead)
+        {
+            SimulateDeathBounce(Time.deltaTime);
+        }
         else
         {
             playerAnimator.SetFloat("yVelocity", jumpManager.PlayerRigidbody.velocity.y);
@@ -37,12 +39,14 @@ public class AnimationManager : MonoBehaviour
 
     private void PlayDeathAnimation(int oldState, int newState)
     {
-        if ((GameState)newState != GameState.GameEnded) return;
+        if ((GameState)newState != GameState.GameEnded)
+            return;
+
         playerSpriteRenderer.enabled = false;
         deathSprite.SetActive(true);
         dead = true;
-        Invoke("StartDeathBounce", deathFreezeDuration);
-        Invoke("ActivateEndGameScreen", deathScreenActivateDelay);
+
+        Invoke(nameof(StartDeathBounce), deathFreezeDuration);
     }
 
     private void StartDeathBounce()
@@ -54,12 +58,7 @@ public class AnimationManager : MonoBehaviour
     private void SimulateDeathBounce(float deltaTime)
     {
         if (!bounceStarted) return;
-        currentSpriteVelocity += Vector2.down * deathSpriteGravity * deltaTime;
+        currentSpriteVelocity += deathSpriteGravity * deltaTime * Vector2.down;
         deathSpriteTransform.position += new Vector3(currentSpriteVelocity.x, currentSpriteVelocity.y, 0) * deltaTime;
-    }
-
-    private void ActivateEndGameScreen()
-    {
-        endGameScreen.SetActive(true);
     }
 }

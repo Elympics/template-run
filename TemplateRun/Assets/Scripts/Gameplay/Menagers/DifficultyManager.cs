@@ -7,7 +7,10 @@ public class DifficultyManager : MonoBehaviour
     private int currentDifficultyIndex = 0;
     private DifficultyPreset.DifficultyLevel CurrentDifficultyLevel => difficultyPreset.difficultyLevels[currentDifficultyIndex];
 
-    public void UpdateDifficulty(int stagesPassed)
+    public float Speed => difficultyPreset.difficultyLevels[currentDifficultyIndex].levelSpeed;
+    public float CoinValue => difficultyPreset.difficultyLevels[currentDifficultyIndex].coinValue;
+
+    public void TryUpdateDifficulty(int stagesPassed)
     {
         if (ReachedMaxDifficulty()) return;
         if (ReachedNextDifficultyThreshold(stagesPassed)) currentDifficultyIndex++;
@@ -23,19 +26,9 @@ public class DifficultyManager : MonoBehaviour
         return stagesPassed > difficultyPreset.difficultyLevels[currentDifficultyIndex + 1].threshold;
     }
 
-    public float GetSpeed()
-    {
-        return difficultyPreset.difficultyLevels[currentDifficultyIndex].levelSpeed;
-    }
-
-    public float GetCoinValue()
-    {
-        return difficultyPreset.difficultyLevels[currentDifficultyIndex].coinValue;
-    }
-
     public GameObject GetRandomStage()
     {
-        //Weighted randomization
+        // Weighted randomization
         int randomWeightedIndex = randomManager.InitializedRandom.Next(0, CurrentDifficultyLevel.WeightSum) + 1;
         int stageIndex = 0;
         int currentWeightedSum = 0;

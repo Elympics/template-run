@@ -9,34 +9,34 @@ public class CoinCollector : MonoBehaviour
     [SerializeField] private LayerMask coinLayer;
     [SerializeField] private TextMeshProUGUI bonusText;
     [SerializeField] private float bonusTextDuration;
+
     private int activeBonusTexts = 0;
-    private bool DoesMaskContainLayer(LayerMask mask, int layer) => (mask & (1 << layer)) != 0;
-    public delegate void OnCoinPickedUp();
-    private event OnCoinPickedUp coinPickedUp;
+
+    public event Action OnCoinPickedUp;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (DoesMaskContainLayer(coinLayer, collision.gameObject.layer))
         {
-            scoreManager.AddToScore(difficultyManager.GetCoinValue());
+            float coinValue = difficultyManager.CoinValue;
+            scoreManager.AddToScore(coinValue);
+
             collision.gameObject.SetActive(false);
-            bonusText.text = "+" + difficultyManager.GetCoinValue().ToString();
+
+            bonusText.text = $"+ {coinValue}";
             bonusText.enabled = true;
             activeBonusTexts++;
-            Invoke("TurnOffBonusText", bonusTextDuration);
-            coinPickedUp?.Invoke();
-            
+            Invoke(nameof(TurnOffBonusText), bonusTextDuration);
+
+            OnCoinPickedUp?.Invoke();
         }
     }
+
+    private bool DoesMaskContainLayer(LayerMask mask, int layer) => (mask & (1 << layer)) != 0;
 
     private void TurnOffBonusText()
     {
         activeBonusTexts--;
-        if(activeBonusTexts <= 0) bonusText.enabled = false;
-    }
-
-    public void SubscribeToCoinPickedUp(OnCoinPickedUp action)
-    {
-        coinPickedUp += action;
+        if (activeBonusTexts <= 0) bonusText.enabled = false;
     }
 }

@@ -166,7 +166,7 @@ public class SoundManager : MonoBehaviour
             gameState = MusicGameState.gameplay;
             jumpManager = FindObjectOfType<JumpManager>();
             FindObjectOfType<GameStateSynchronizer>().SubscribeToGameStateChange(AdjustToGameState);
-            FindObjectOfType<CoinCollector>().SubscribeToCoinPickedUp(PlayCoinSound);
+            FindObjectOfType<CoinCollector>().OnCoinPickedUp += PlayCoinSound;
         }
     }
 
