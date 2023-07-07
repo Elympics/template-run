@@ -1,9 +1,4 @@
-﻿using UnityEngine;
-using System;
-
-[Serializable]
-[CreateAssetMenu(fileName = "UserData", menuName = "TemplateRun/UserData")]
-public class UserData : ScriptableObject
+﻿public static class UserData
 {
-    public string Nickname = string.Empty;
+    public static string Nickname { get; set; } = string.Empty;
 }

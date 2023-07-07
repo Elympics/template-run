@@ -8,8 +8,6 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private LoginPanel loginPanel;
     [SerializeField] private LeaderboardsDisplayer leaderboardsDisplayer;
 
-    [SerializeField] private UserData userData;
-
     private void Awake()
     {
         ElympicsLobbyClient.Instance.AuthenticationFailed += OnAuthenticationFailed;
@@ -29,7 +27,7 @@ public class LoginManager : MonoBehaviour
         if (!leaderboardsDisplayer.FetchAlreadyStarted)
             leaderboardsDisplayer.InitializeAndRun();
 
-        if (!string.IsNullOrEmpty(userData.Nickname))
+        if (!string.IsNullOrEmpty(UserData.Nickname))
         {
             loginPanel.Hide();
             menuPanel.SetActive(true);
@@ -54,7 +52,7 @@ public class LoginManager : MonoBehaviour
         }
         else
         {
-            userData.Nickname = result.Value.Nickname;
+            UserData.Nickname = result.Value.Nickname;
             AdjustToUserAuthentication();
         }
     }
@@ -67,7 +65,7 @@ public class LoginManager : MonoBehaviour
             return;
         }
 
-        userData.Nickname = result.Value.Nickname;
+        UserData.Nickname = result.Value.Nickname;
         AdjustToUserAuthentication();
     }
 }
