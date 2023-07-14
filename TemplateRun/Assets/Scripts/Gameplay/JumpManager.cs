@@ -24,6 +24,11 @@ public class JumpManager : ElympicsMonoBehaviour
     private float jumpBufferCounter;
     private bool rememberedJumpInput;
 
+    // For effects
+    private bool isMidAir = false;
+    public event System.Action OnJumped;
+    public event System.Action OnLanded;
+
     public void ManageJump(bool jumpInput)
     {
         //We only jump when the jump button was pressed, not held
@@ -38,6 +43,12 @@ public class JumpManager : ElympicsMonoBehaviour
         if (IsGrounded())
         {
             coyoteTimeCounter = coyoteTime;
+
+            if (isMidAir)
+            {
+                isMidAir = false;
+                OnLanded?.Invoke();
+            }
         }
 
         float gravityMultiplier;
@@ -48,6 +59,9 @@ public class JumpManager : ElympicsMonoBehaviour
             gravityMultiplier = 0;
             jumpBufferCounter = 0;
             coyoteTimeCounter = 0;
+
+            isMidAir = true;
+            OnJumped?.Invoke();
         }
         else if (playerRigidBody.velocity.y < 0)
         {
