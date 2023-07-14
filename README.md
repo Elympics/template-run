@@ -1,8 +1,11 @@
 ![Unity 2021.3.5f1 badge](https://img.shields.io/badge/Unity-2021.3.5f1-blue)
 ![Elympics 0.7.2 badge](https://img.shields.io/badge/Elympics-0.7.2-white)
 
-![Elympics](Resources/images/logo-light.png#gh-dark-mode-only)
-![Elympics](Resources/images/logo-dark.png#gh-light-mode-only)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://static.elympics.cc/assets/logo/elympics-light.png">
+  <img alt="Elympics" src="https://static.elympics.cc/assets/logo/elympics-dark.png">
+</picture>
+
 
 # Open-source endless runner template by Elympics
 

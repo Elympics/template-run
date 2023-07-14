@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +6,10 @@ using TMPro;
 
 public class LoadingScreenManager : MonoBehaviour
 {
-    public static LoadingScreenManager Instance;
+    private enum MessageState { Hidden, MovingIn, Stay, MovingOut }
+
+    private static readonly Color TransparentColor = new Color(1, 1, 1, 0);
+
     [SerializeField] private Slider sliderTopPart;
     [SerializeField] private Slider sliderBottomPart;
     [SerializeField] private GameObject darkTint;
@@ -27,66 +29,50 @@ public class LoadingScreenManager : MonoBehaviour
     [SerializeField] private float messageSlideDuration;
     [SerializeField] private Vector2 targetMessageOffset;
 
-    private bool isOpen;
-    private bool wasOpen;
+    private bool isHidden = true;
+    private bool wasHidden = true;
     private bool slideInProgress;
     private float slideTimer;
     private bool slidingDown;
     private float shadeTimer;
-    private int messageState;
+
+    private MessageState messageState;
     private float messageTimer;
     private int messageIndex;
 
-    private void Awake()
+    private void Start()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        OpenSlider();
-        isOpen = true;
-        wasOpen = true;
-        SceneManager.sceneLoaded += ReactToSceneLoaded;
+        HideLoadingScreen();
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= ReactToSceneLoaded;
-    }
-
-
-    private void ReactToSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void AdjustToSceneLoaded(Scene scene)
     {
         if (scene.buildIndex == 0)
-            SetSliderOpen(true);
+            ChangeLoadingDisplayState(true);
     }
 
-    public void SetSliderOpen(bool open)
+    public void ChangeLoadingDisplayState(bool toHidden)
     {
-        isOpen = open;
+        isHidden = toHidden;
     }
 
     private void Update()
     {
-        if (isOpen)
+        if (isHidden)
         {
-            if (!wasOpen) OpenSlider();
+            if (!wasHidden) HideLoadingScreen();
         }
         else
         {
-            if (wasOpen) CloseSlider();
+            if (wasHidden) DisplayLoadingScreen();
             if (!slideInProgress) ProcessLoadingSign();
         }
 
         if (slideInProgress) ProcessSlide();
-        wasOpen = isOpen;
+        wasHidden = isHidden;
     }
 
-    private void OpenSlider()
+    private void HideLoadingScreen()
     {
         slidingDown = false;
         slideInProgress = true;
@@ -100,7 +86,7 @@ public class LoadingScreenManager : MonoBehaviour
         sliderBottomPart.value = 0.5f;
     }
 
-    private void CloseSlider()
+    private void DisplayLoadingScreen()
     {
         slidingDown = true;
         slideInProgress = true;
@@ -117,16 +103,16 @@ public class LoadingScreenManager : MonoBehaviour
     {
         slideTimer += Time.deltaTime;
         float slidePercent = slideTimer / slideDuration;
-        if(slidePercent > 1)
+        if (slidePercent > 1)
         {
             slideInProgress = false;
             darkTint.SetActive(slidingDown);
             sliderTopPart.gameObject.SetActive(false);
             sliderBottomPart.gameObject.SetActive(false);
             loadingTransform.gameObject.SetActive(slidingDown);
-            if(slidingDown)
+            if (slidingDown)
             {
-                dogHead.color = new Color(1, 1, 1, 0);
+                dogHead.color = TransparentColor;
                 shadeTimer = 0;
                 loadingTransform.localScale = Vector3.zero;
             }
@@ -135,13 +121,13 @@ public class LoadingScreenManager : MonoBehaviour
 
         if (!slidingDown) slidePercent = 1 - slidePercent;
         sliderTopPart.value = slidePercent / 2;
-        sliderBottomPart.value = slidePercent / 2;        
+        sliderBottomPart.value = slidePercent / 2;
     }
 
     private void ProcessLoadingSign()
     {
         loadingTransform.eulerAngles = new Vector3(0, 0, loadingTransform.eulerAngles.z - rotationSpeed * Time.deltaTime);
-        if(shadeTimer < shadeDuration)
+        if (shadeTimer < shadeDuration)
         {
             shadeTimer += Time.deltaTime;
             if (shadeTimer > shadeDuration)
@@ -160,16 +146,16 @@ public class LoadingScreenManager : MonoBehaviour
     {
         switch (messageState)
         {
-            case 0:
+            case MessageState.Hidden:
                 SpawnMessage();
                 break;
-            case 1:
+            case MessageState.MovingIn:
                 ProcessMessageMovingIn();
                 break;
-            case 2:
+            case MessageState.Stay:
                 ProcessMessageStay();
                 break;
-            case 3:
+            case MessageState.MovingOut:
                 ProcessMessageMovingOut();
                 break;
         }
@@ -179,9 +165,9 @@ public class LoadingScreenManager : MonoBehaviour
         message.text = messageList[messageIndex];
         messageIndex++;
         if (messageIndex == messageList.Count) messageIndex = 0;
-        loadingMessageTransform.anchoredPosition = new Vector2( Screen.width / 2 + targetMessageOffset.x, targetMessageOffset.y);
+        loadingMessageTransform.anchoredPosition = new Vector2(Screen.width / 2 + targetMessageOffset.x, targetMessageOffset.y);
         message.alpha = 0;
-        SetMessageState(1);
+        messageState = MessageState.MovingIn;
     }
 
     private void ProcessMessageMovingIn()
@@ -189,13 +175,13 @@ public class LoadingScreenManager : MonoBehaviour
         messageTimer += Time.deltaTime;
         float slideProgress = messageTimer / messageSlideDuration;
         if (slideProgress > 1) slideProgress = 1;
-        loadingMessageTransform.anchoredPosition = new Vector2( Screen.width / 2 * (1- slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
+        loadingMessageTransform.anchoredPosition = new Vector2(Screen.width / 2 * (1 - slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
         message.alpha = slideProgress;
 
-        if(slideProgress == 1)
+        if (slideProgress == 1)
         {
             messageTimer = 0;
-            SetMessageState(2);
+            messageState = MessageState.Stay;
         }
     }
 
@@ -203,10 +189,10 @@ public class LoadingScreenManager : MonoBehaviour
     {
         messageTimer += Time.deltaTime;
         float stayDuration = (messageIndex > 2) ? shortMessageStayDuration : messageStayDuration;
-        if(messageTimer > stayDuration)
+        if (messageTimer > stayDuration)
         {
             messageTimer = 0;
-            SetMessageState(3);
+            messageState = MessageState.MovingOut;
         }
     }
     private void ProcessMessageMovingOut()
@@ -214,18 +200,13 @@ public class LoadingScreenManager : MonoBehaviour
         messageTimer += Time.deltaTime;
         float slideProgress = 1 - (messageTimer / messageSlideDuration);
         if (slideProgress < 0) slideProgress = 0;
-        loadingMessageTransform.anchoredPosition = new Vector2( -Screen.width / 2 * (1 - slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
+        loadingMessageTransform.anchoredPosition = new Vector2(-Screen.width / 2 * (1 - slideProgress) + targetMessageOffset.x, targetMessageOffset.y);
         message.alpha = slideProgress;
 
         if (slideProgress == 0)
         {
             messageTimer = 0;
-            SetMessageState(0);
+            messageState = MessageState.Hidden;
         }
-    }
-
-    private void SetMessageState(int state)
-    {
-        messageState = state;
     }
 }

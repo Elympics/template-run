@@ -38,7 +38,7 @@ MonoBehaviour:
   prediction: 1
   predictionLimitInTicks: 8
   detailedNetworkLog: 0
-  mode: 2
+  mode: 1
   halfRemoteMode: 0
   useWebInHalfRemote: 0
   ipForHalfRemoteMode: 127.0.0.1

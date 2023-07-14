@@ -29,7 +29,7 @@ public class MatchmakingManager : MonoBehaviour
     [UsedImplicitly]
     public async void PlayOnline()
     {
-        LoadingScreenManager.Instance.SetSliderOpen(false);
+        PersistentEffectsManager.Instance.ChangeLoadingScreenDisplayState(false);
         ControlPlayAccess(false);
 
         var (Region, LatencyMs) = await regionData.ClosestRegion();
