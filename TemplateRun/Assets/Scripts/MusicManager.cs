@@ -21,9 +21,9 @@ public class MusicManager : MonoBehaviour
 
     private MusicGameState gameState = MusicGameState.Menu;
 
-    public void SetUpOnAwake()
+    private void Start()
     {
-        menuMusic[0].AudioSource.Play();
+        PlayMenuMusic();
     }
 
     public void AdjustStateToScene(Scene newScene)
@@ -80,6 +80,10 @@ public class MusicManager : MonoBehaviour
 
     private void PlayMusicLoop(AudioSource sourceToPlay)
     {
+        gameOverSound.AudioSource.Stop();
+        resultsMusic[0].AudioSource.Stop();
+        resultsMusic[1].AudioSource.Stop();
+
         sourceToPlay.Play();
         playingALoop = true;
         loopedMusicTimer = 0;
@@ -87,9 +91,6 @@ public class MusicManager : MonoBehaviour
 
     private void PlayMenuMusic()
     {
-        resultsMusic[0].AudioSource.Stop();
-        resultsMusic[1].AudioSource.Stop();
-
         PlayMusicLoop(menuMusic[0].AudioSource);
     }
 

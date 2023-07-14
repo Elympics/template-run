@@ -20,14 +20,11 @@ public class PersistentEffectsManager : MonoBehaviour
 
         AudioProperties.Init();
 
-        loadingScreenManager.SetUpOnAwake();
-        musicManager.SetUpOnAwake();
         SceneManager.sceneLoaded += ReactToSceneLoaded;
     }
 
     private void OnDestroy()
     {
-        AudioProperties.Serialize();
         SceneManager.sceneLoaded -= ReactToSceneLoaded;
     }
 
@@ -37,7 +34,7 @@ public class PersistentEffectsManager : MonoBehaviour
         musicManager.AdjustStateToScene(scene);
     }
 
-    public void SetLoadingScreenSliderOpen(bool state) => loadingScreenManager.SetSliderOpen(state);
+    public void ChangeLoadingScreenDisplayState(bool state) => loadingScreenManager.ChangeLoadingDisplayState(state);
     public void PlayGameplayMusic() => musicManager.PlayGameplayMusic();
     public void PlayGameOverSoundEffects() => musicManager.PlayGameOverSoundEffects();
 }

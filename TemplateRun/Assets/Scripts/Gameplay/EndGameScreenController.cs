@@ -54,7 +54,7 @@ public class EndGameScreenController : ElympicsMonoBehaviour, IInitializable
     [UsedImplicitly]
     public void GoBackToMenu()
     {
-        PersistentEffectsManager.Instance.SetLoadingScreenSliderOpen(false);
+        PersistentEffectsManager.Instance.ChangeLoadingScreenDisplayState(false);
 
         SceneManager.LoadScene(MainMenuSceneIndex);
     }

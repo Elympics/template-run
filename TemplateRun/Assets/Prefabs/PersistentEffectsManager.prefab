@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3710950595918725360}
   - component: {fileID: 3710950595918725361}
   m_Layer: 0
-  m_Name: PersistentManagers
+  m_Name: PersistentEffectsManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3710950595918725362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2795cb4914362ed4a82aecf695ea92a5, type: 3}
+  m_Script: {fileID: 11500000, guid: f83f41290288e2f4ba02d5b38cf89089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreenManager: {fileID: 5520564686786787697}

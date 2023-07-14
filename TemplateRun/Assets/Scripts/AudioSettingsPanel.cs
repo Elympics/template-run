@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AudioSettings : MonoBehaviour
+public class AudioSettingsPanel : MonoBehaviour
 {
     [SerializeField] private GameObject openSettingsButton;
     [SerializeField] private GameObject soundSettingsPanel;
@@ -49,5 +49,8 @@ public class AudioSettings : MonoBehaviour
     {
         openSettingsButton.SetActive(!active);
         soundSettingsPanel.SetActive(active);
+
+        if (!active)
+            AudioProperties.Serialize();
     }
 }

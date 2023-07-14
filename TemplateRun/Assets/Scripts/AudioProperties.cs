@@ -37,8 +37,6 @@ public static class AudioProperties
     {
         RealPreferredVolume = PlayerPrefs.GetFloat(PreferredVolumeKey, DefaultVolume);
         Muted = PlayerPrefs.GetInt(ShouldBeMutedKey, 0) == 1;    // 0 - not muted, 1 - muted
-        Debug.Log($"RealPreferredVolume = {RealPreferredVolume}");
-        Debug.Log($"Muted = {Muted}");
     }
 
     public static void Serialize()
