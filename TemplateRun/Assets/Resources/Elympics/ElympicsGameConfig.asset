@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameName: TemplateRun
   gameId: 9e806e1a-4f6b-4ad8-b93c-7e9d9ce9bd05
-  gameVersion: 3
+  gameVersion: 6
   players: 1
   gameplayScene: Assets/Scenes/GameplayScene.unity
   gameplaySceneAsset: {fileID: 102900000, guid: 44af9b6996968e14895edc4e60148ab2, type: 3}
@@ -32,6 +32,8 @@ MonoBehaviour:
     webRtcOfferRetryDelay: 1
     initialSynchronizeMaxRetries: 3
   ticksPerSecond: 30
+  minClientTickRateFactor: 0.8
+  maxClientTickRateFactor: 1.25
   snapshotSendingPeriodInTicks: 1
   inputLagTicks: 2
   maxAllowedLagInTicks: 15
@@ -52,5 +54,5 @@ MonoBehaviour:
   - userId: 0
     isBot: 0
     botDifficulty: 0
-    gameEngineData: 55a40000
+    gameEngineData: 
     matchmakerData: []
