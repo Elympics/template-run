@@ -46,14 +46,25 @@ public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, I
         StartCoroutine(WaitForClientsToConnect());
     }
 
+#warning Potential vulnerability: Currently, seed handling is implemented in such a way that player's GameEngineData is taken into account if available. Otherwise it is randomized by the server. First solution is only secure if proper External Game Backend is provided. If not, user could send prepared seed manually. In such case it is recommended to remove checking and just apply server generated seed directly.
     private void InitializeRandomnessSeed(InitialMatchPlayerDatasGuid initialMatchPlayerDatas)
     {
         byte[] data = initialMatchPlayerDatas[0].GameEngineData;
-        int seed = BitConverter.ToInt32(data);
-        randomManager.SetSeed(seed);
+        int seed;
 
-        // If you don't have External Game Backend which could provide seed on match creation, use code below instead
-        // randomManager.SetSeed(UnityEngine.Random.Range(int.MinValue, int.MaxValue));
+        try
+        {
+            // Available when our External Game Backend is connected to the game
+            // or when there is no EGB connected but a player supplies valid Game Engine data
+            seed = BitConverter.ToInt32(data);
+        }
+        catch (Exception)
+        {
+            // Alternatively, seed is just randomized by the server
+            seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+        }
+
+        randomManager.SetSeed(seed);
     }
 
     private IEnumerator WaitForClientsToConnect()

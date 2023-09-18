@@ -21,7 +21,7 @@ public class LoginManager : MonoBehaviour
 
     private void AdjustToUserAuthentication()
     {
-        if (!ElympicsLobbyClient.Instance.IsAuthenticated)
+        if (ElympicsLobbyClient.Instance == null || !ElympicsLobbyClient.Instance.IsAuthenticated)
             return;
 
         if (!leaderboardsDisplayer.FetchAlreadyStarted)

@@ -23,6 +23,12 @@ public class LeaderboardsDisplayer : MonoBehaviour
 
     public void InitializeAndRun()
     {
+        if (ElympicsLobbyClient.Instance == null)
+        {
+            Debug.LogWarning("Leaderboards won't work unless you start from the menu scene.");
+            return;
+        }
+
         FetchAlreadyStarted = true;
         ExternalBackendClient.GetCurrentLeaderboardProperties(HandleLeaderboardRequest);
     }
@@ -50,6 +56,9 @@ public class LeaderboardsDisplayer : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (ElympicsLobbyClient.Instance == null)
+            return;
+
         ElympicsLobbyClient.Instance.AuthenticationSucceeded -= FetchTopThree;
     }
 

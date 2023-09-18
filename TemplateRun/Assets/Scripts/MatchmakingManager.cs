@@ -8,10 +8,12 @@ public class MatchmakingManager : MonoBehaviour
 {
     [SerializeField] private Button playButton;
     [SerializeField] private ErrorPanel errorPanel;
-    [SerializeField] private RegionData regionData;
 
     private void Start()
     {
+        if (ElympicsLobbyClient.Instance == null)
+            return;
+
         ControlPlayAccess(ElympicsLobbyClient.Instance.IsAuthenticated);
         ElympicsLobbyClient.Instance.AuthenticationSucceeded += (_) => ControlPlayAccess(true);
 
@@ -20,6 +22,9 @@ public class MatchmakingManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (ElympicsLobbyClient.Instance == null)
+            return;
+
         ElympicsLobbyClient.Instance.Matchmaker.MatchmakingFailed -= OnMatchmakingFailed;
     }
 
@@ -29,10 +34,16 @@ public class MatchmakingManager : MonoBehaviour
     [UsedImplicitly]
     public async void PlayOnline()
     {
+        if (ElympicsLobbyClient.Instance == null)
+        {
+            Debug.LogWarning("In order for this method to work you need to start from the menu scene. Method call skipped.");
+            return;
+        }
+
         PersistentEffectsManager.Instance.ChangeLoadingScreenDisplayState(false);
         ControlPlayAccess(false);
 
-        var (Region, LatencyMs) = await regionData.ClosestRegion();
+        var (Region, LatencyMs) = await ClosestRegionFinder.GetClosestRegion();
         ElympicsLobbyClient.Instance.PlayOnlineInRegion(Region, null, null, QueueDict.MatchmakingQueueSolo);
 
         Debug.Log($"Connecting to region {Region} with ping {LatencyMs}");
