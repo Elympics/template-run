@@ -19,8 +19,7 @@ MonoBehaviour:
   gameplayScene: Assets/Scenes/GameplayScene.unity
   gameplaySceneAsset: {fileID: 102900000, guid: 44af9b6996968e14895edc4e60148ab2, type: 3}
   botsInServer: 1
-  useWeb: 0
-  legacyMatchmakingClient: 0
+  useWeb: 1
   enableReconnect: 0
   connectionConfig:
     sessionConnectTimeout: 15
@@ -42,7 +41,6 @@ MonoBehaviour:
   detailedNetworkLog: 0
   mode: 1
   halfRemoteMode: 0
-  useWebInHalfRemote: 0
   ipForHalfRemoteMode: 127.0.0.1
   tcpPortForHalfRemoteMode: 9101
   webPortForHalfRemoteMode: 9102
