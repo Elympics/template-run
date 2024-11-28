@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.daftmobile.elympics": "https://github.com/Elympics/Unity-SDK.git",
+    "com.daftmobile.elympics-playpad": "https://github.com/Elympics/playpad-sdk.git",
     "com.unity.burst": "1.8.4",
     "com.unity.collab-proxy": "1.15.18",
     "com.unity.feature.2d": "1.0.0",

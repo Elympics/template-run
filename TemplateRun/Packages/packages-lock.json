@@ -7,6 +7,15 @@
       "dependencies": {},
       "hash": "7cbb8807ddf491369391f6a6bf4a3d15cd778d9e"
     },
+    "com.daftmobile.elympics-playpad": {
+      "version": "https://github.com/Elympics/playpad-sdk.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.daftmobile.elympics": "0.14.2"
+      },
+      "hash": "0f90638fade9df58741115a0a57f29fda3708c5e"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.6",
       "depth": 1,
