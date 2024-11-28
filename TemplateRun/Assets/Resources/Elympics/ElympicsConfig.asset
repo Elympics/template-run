@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbda3b6548e73a4abba8ab9879eefe1, type: 3}
   m_Name: ElympicsConfig
   m_EditorClassIdentifier: 
-  elympicsApiEndpoint: https://api.elympics.cc
-  elympicsLobbyEndpoint: https://lobby.elympics.cc
+  elympicsWebEndpoint: https://api.elympics.cc
   elympicsGameServersEndpoint: https://gs.elympics.cc
-  currentGame: 0
+  currentGame: 1
   availableGames:
   - {fileID: 11400000, guid: 620ee76af97156d48884780e8caa08be, type: 2}
+  - {fileID: 11400000, guid: a4da13ff271134d429faf39c15cf99d9, type: 2}
