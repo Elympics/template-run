@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameName: TemplateRun
   gameId: 9e806e1a-4f6b-4ad8-b93c-7e9d9ce9bd05
-  gameVersion: 6
+  gameVersion: 9
   players: 1
   gameplayScene: Assets/Scenes/GameplayScene.unity
   gameplaySceneAsset: {fileID: 102900000, guid: 44af9b6996968e14895edc4e60148ab2, type: 3}
