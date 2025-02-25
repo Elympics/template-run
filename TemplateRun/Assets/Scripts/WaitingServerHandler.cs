@@ -56,7 +56,7 @@ public class WaitingServerHandler : ElympicsMonoBehaviour, IServerHandlerGuid, I
         else
             seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
 
-        randomManager.SetSeed(seed);
+        randomManager.InitializeRandomization(seed);
     }
 
     private IEnumerator WaitForClientsToConnect()

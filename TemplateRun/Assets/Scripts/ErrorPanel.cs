@@ -17,7 +17,7 @@ public class ErrorPanel : MonoBehaviour
         if (matchmakingError)
         {
             tryAgainButton.gameObject.SetActive(true);
-            PersistentEffectsManager.Instance.ChangeLoadingScreenDisplayState(true);
+            PersistentEffectsManager.Instance.SetMatchLoadingScreenActive(false);
         }
         else
         {

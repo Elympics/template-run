@@ -1,10 +1,12 @@
 using Elympics;
+using ElympicsPlayPad.Samples.AsyncGame;
 
-public class ScoreManager : ElympicsMonoBehaviour
+public class ScoreManager : ScoreProviderBase
 {
     private readonly ElympicsFloat score = new ElympicsFloat();
 
     public float Score => score.Value;
+    public override float[] Scores => new float[] { Score };
 
     public void AddToScore(float addedScore) => score.Value += addedScore;
 

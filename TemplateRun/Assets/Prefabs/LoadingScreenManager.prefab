@@ -465,8 +465,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9215224323801974365}
   - component: {fileID: 9215224323801974364}
-  - component: {fileID: 9215224323801974366}
   - component: {fileID: 9215224324105808022}
+  - component: {fileID: 9215224323801974366}
   m_Layer: 0
   m_Name: LoadingScreenManager
   m_TagString: Untagged
@@ -520,40 +520,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 100
   m_TargetDisplay: 0
---- !u!114 &9215224323801974366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9215224323801974355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73c7c7b38988cef478d94f5ce0a26a71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sliderTopPart: {fileID: 9215224324014203818}
-  sliderBottomPart: {fileID: 9215224324905579571}
-  darkTint: {fileID: 9215224323051684274}
-  slideDuration: 0.5
-  loadingTransform: {fileID: 9215224323214478639}
-  dogHead: {fileID: 9215224323541184467}
-  rotationSpeed: 100
-  shadeDuration: 1
-  loadingMessageTransform: {fileID: 9215224324851911412}
-  message: {fileID: 9215224324851911370}
-  messageList:
-  - Planting trees...
-  - Mowing grass...
-  - Woof...
-  - Petting dogs...
-  - Cat...
-  - What???
-  - Nothing unusual...
-  messageStayDuration: 2
-  shortMessageStayDuration: 0.1
-  messageSlideDuration: 0.5
-  targetMessageOffset: {x: -1500, y: -150}
 --- !u!114 &9215224324105808022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +543,42 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &9215224323801974366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9215224323801974355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c7c7b38988cef478d94f5ce0a26a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matchConnectingObject: {fileID: 0}
+  subText: {fileID: 0}
+  sliderTopPart: {fileID: 9215224324014203818}
+  sliderBottomPart: {fileID: 9215224324905579571}
+  darkTint: {fileID: 9215224323051684274}
+  slideDuration: 0.5
+  loadingTransform: {fileID: 9215224323214478639}
+  dogHead: {fileID: 9215224323541184467}
+  rotationSpeed: 100
+  shadeDuration: 1
+  loadingMessageTransform: {fileID: 9215224324851911412}
+  message: {fileID: 9215224324851911370}
+  messageList:
+  - Planting trees...
+  - Mowing grass...
+  - Woof...
+  - Petting dogs...
+  - Cat...
+  - What???
+  - Nothing unusual...
+  messageStayDuration: 2
+  shortMessageStayDuration: 0.1
+  messageSlideDuration: 0.5
+  targetMessageOffset: {x: -1500, y: -150}
 --- !u!1 &9215224324014203816
 GameObject:
   m_ObjectHideFlags: 0

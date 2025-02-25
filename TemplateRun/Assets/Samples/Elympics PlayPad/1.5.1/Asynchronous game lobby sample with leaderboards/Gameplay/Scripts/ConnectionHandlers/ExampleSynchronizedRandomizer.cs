@@ -2,7 +2,7 @@ using System;
 
 namespace ElympicsPlayPad.Samples.AsyncGame
 {
-    public class SynchronizedRandomizer : SynchronizedRandomizerBase
+    public class ExampleSynchronizedRandomizer : SynchronizedRandomizerBase
     {
         private const uint CombineHash = 0x9E3779B9;
 

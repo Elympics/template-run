@@ -8,9 +8,9 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         [SerializeField] private GameObject matchConnectingObject;
         [SerializeField] private TextMeshProUGUI subText;
 
-        public static MatchConnectingMask Instance { get; private set; } = null;
+        public static MatchConnectingMask Instance { get; protected set; } = null;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (Instance != null)
             {
@@ -22,13 +22,13 @@ namespace ElympicsPlayPad.Samples.AsyncGame
             DontDestroyOnLoad(gameObject);
         }
 
-        public void ShowOrUpdate(string subTextValue)
+        public virtual void ShowOrUpdate(string subTextValue)
         {
             subText.text = subTextValue;
             matchConnectingObject.SetActive(true);
         }
 
-        public void Hide()
+        public virtual void Hide()
         {
             subText.text = string.Empty;
             matchConnectingObject.SetActive(false);

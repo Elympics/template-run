@@ -1,11 +1,12 @@
 using Elympics;
+using ElympicsPlayPad.Samples.AsyncGame;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class GameStartCountdown : ElympicsMonoBehaviour, IUpdatable, IInitializable
 {
-    [SerializeField] private WaitingServerHandler serverHandler;
+    [SerializeField] private GenericServerHandler serverHandler;
 
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private int secondsToStartAfterConnection = 3;
@@ -24,11 +25,15 @@ public class GameStartCountdown : ElympicsMonoBehaviour, IUpdatable, IInitializa
 
     public void Initialize()
     {
-        serverHandler.OnGameReady += StartCountdown;
+        serverHandler.GameJustStarted += StartCountdown;
     }
 
     private void StartCountdown()
     {
+        Assert.IsNotNull(PersistentEffectsManager.Instance);
+
+        PersistentEffectsManager.Instance.PlayGameplayMusic();
+
         timeToStart.Value = secondsToStartAfterConnection;
         countdownStarted = true;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ElympicsPlayPad.Samples.AsyncGame
 {
-    [RequireComponent(typeof(MatchEnder), typeof(SynchronizedRandomizerBase))]
+    [RequireComponent(typeof(MatchEnder))]
     public class GenericServerHandler : DefaultServerHandlerr, IUpdatable
     {
         [Tooltip("Viable only when " + nameof(autoTerminationOnLeft) + " is set to None.")]
@@ -15,7 +15,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         private bool _anyPlayerJustRejoined = false;
 
         private MatchEnder _matchEnder;
-        private SynchronizedRandomizerBase _synchronizedRandomizer;
+        [SerializeField] private SynchronizedRandomizerBase synchronizedRandomizer;
 
 
         public event Action GameJustStarted;
@@ -27,7 +27,9 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         private void Awake()
         {
             _matchEnder = GetComponent<MatchEnder>();
-            _synchronizedRandomizer = GetComponent<SynchronizedRandomizerBase>();
+
+            if (synchronizedRandomizer == null)
+                throw new NullReferenceException($"Make sure that your randomization system inherits from {nameof(SynchronizedRandomizerBase)}");
         }
 
         public override void OnServerInit(InitialMatchPlayerDatasGuid initialMatchPlayerDatas)
@@ -39,7 +41,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
                 seed = tournamentId.GetHashCode();
             }
 
-            _synchronizedRandomizer.InitializeRandomization(seed);
+            synchronizedRandomizer.InitializeRandomization(seed);
 
             base.OnServerInit(initialMatchPlayerDatas);
         }
@@ -69,14 +71,14 @@ namespace ElympicsPlayPad.Samples.AsyncGame
             {
                 _gameJustStarted = false;
                 StartGameplay();
-                StartGameplayAtClient(_synchronizedRandomizer.InitialSeed);
+                StartGameplayAtClient(synchronizedRandomizer.InitialSeed);
             }
 
             if (_anyPlayerJustRejoined)
             {
                 _anyPlayerJustRejoined = false;
                 HandleRejoin();
-                HandleRejoinAtClient(_synchronizedRandomizer.InitialSeed);
+                HandleRejoinAtClient(synchronizedRandomizer.InitialSeed);
             }
 
             if (PlayersConnected.Count == 0 && GameStarted && autoTerminationOnLeft == TerminationOption.None)
@@ -100,7 +102,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         [ElympicsRpc(ElympicsRpcDirection.ServerToPlayers)]
         private void HandleRejoinAtClient(int initialSeed)
         {
-            _synchronizedRandomizer.InitializeRandomization(initialSeed);
+            synchronizedRandomizer.InitializeRandomization(initialSeed);
             HandleRejoin();
         }
 
@@ -113,7 +115,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         [ElympicsRpc(ElympicsRpcDirection.ServerToPlayers)]
         private void StartGameplayAtClient(int initialSeed)
         {
-            _synchronizedRandomizer.InitializeRandomization(initialSeed);
+            synchronizedRandomizer.InitializeRandomization(initialSeed);
             StartGameplay();
         }
     }

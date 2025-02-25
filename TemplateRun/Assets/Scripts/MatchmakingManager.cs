@@ -40,7 +40,7 @@ public class MatchmakingManager : MonoBehaviour
             return;
         }
 
-        PersistentEffectsManager.Instance.ChangeLoadingScreenDisplayState(false);
+        PersistentEffectsManager.Instance.SetMatchLoadingScreenActive(true);
         ControlPlayAccess(false);
 
         var (Region, LatencyMs) = await ClosestRegionFinder.GetClosestRegion();

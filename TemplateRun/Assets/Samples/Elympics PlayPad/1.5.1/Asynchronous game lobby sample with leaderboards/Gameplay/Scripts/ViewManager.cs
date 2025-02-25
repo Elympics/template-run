@@ -11,11 +11,11 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         [SerializeField] private EndGameView gameEndedView;
         [SerializeField] private Camera mainCamera;
 
-        private SynchronizedRandomizer randomizer;
+        private ExampleSynchronizedRandomizer randomizer;
 
         private void Awake()
         {
-            randomizer = FindObjectOfType<SynchronizedRandomizer>();
+            randomizer = FindObjectOfType<ExampleSynchronizedRandomizer>();
             Assert.IsNotNull(randomizer);
         }
 

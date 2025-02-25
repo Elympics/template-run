@@ -149,17 +149,29 @@ namespace ElympicsPlayPad.Samples.AsyncGame
 
             MatchConnectingMask.Instance.Hide();
         }
-        #endregion
 
-        #region diagnosis
         public void OnDisconnectedByServer()
         {
-            Debug.Log($"[{nameof(MatchConnectionHandler)}.{nameof(OnDisconnectedByServer)}]");
+            if (matchEnded)
+                return;
+
+            Debug.LogError($"[{nameof(MatchConnectionHandler)}.{nameof(OnDisconnectedByServer)}]");
+
+
+            secondsWithoutConnection = -1;
+            disconnectionMask.ShowDefiniteDisconnection("Lost connection to the server (disconnected by server).");
         }
 
         public void OnDisconnectedByClient()
         {
-            Debug.Log($"[{nameof(MatchConnectionHandler)}.{nameof(OnDisconnectedByClient)}]");
+            if (matchEnded)
+                return;
+
+            Debug.LogError($"[{nameof(MatchConnectionHandler)}.{nameof(OnDisconnectedByClient)}]");
+
+
+            secondsWithoutConnection = -1;
+            disconnectionMask.ShowDefiniteDisconnection("Lost connection to the server (disconnected by client).");
         }
         #endregion
     }
