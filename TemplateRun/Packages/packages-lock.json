@@ -1,20 +1,20 @@
 {
   "dependencies": {
     "com.daftmobile.elympics": {
-      "version": "https://github.com/Elympics/Unity-SDK.git",
+      "version": "https://gitlab.app.daftmobile.com/elympics/unity-sdk-package.git#develop",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "7cbb8807ddf491369391f6a6bf4a3d15cd778d9e"
+      "hash": "80d9ae170265471734820a4e20253abde101b160"
     },
     "com.daftmobile.elympics-playpad": {
-      "version": "https://github.com/Elympics/playpad-sdk.git",
+      "version": "https://gitlab.app.daftmobile.com/elympics/sdk/unity-lobby.git#develop",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.daftmobile.elympics": "0.14.2"
+        "com.daftmobile.elympics": "0.15.3"
       },
-      "hash": "0f90638fade9df58741115a0a57f29fda3708c5e"
+      "hash": "474aacbc733f7f36e9ad47b0416b1ef0c8b6b5aa"
     },
     "com.unity.2d.animation": {
       "version": "7.0.6",
