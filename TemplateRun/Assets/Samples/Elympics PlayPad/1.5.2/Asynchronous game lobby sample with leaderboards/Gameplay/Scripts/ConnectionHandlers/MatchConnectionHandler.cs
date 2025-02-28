@@ -3,7 +3,6 @@ using System.Collections;
 using Elympics;
 using MatchTcpClients.Synchronizer;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace ElympicsPlayPad.Samples.AsyncGame
 {
@@ -31,7 +30,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         private void Awake()
         {
             if (disconnectionMask == null)
-                throw new NullReferenceException($"You need to provide {nameof(MatchDisconnectionMask)} for connection issues handling");
+                throw new NullReferenceException($"You need to provide {nameof(MatchDisconnectionMask)} for connection issues handling - ensure that it is assigned to the {nameof(MatchConnectionHandler)} component");
 
             if (ElympicsLobbyClient.Instance != null)
                 ElympicsLobbyClient.Instance.WebSocketSession.Disconnected += WebSocketSession_Disconnected;

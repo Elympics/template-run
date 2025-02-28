@@ -29,7 +29,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
             _matchEnder = GetComponent<MatchEnder>();
 
             if (synchronizedRandomizer == null)
-                throw new NullReferenceException($"Make sure that your randomization system inherits from {nameof(SynchronizedRandomizerBase)}");
+                throw new NullReferenceException($"Make sure that your randomization system inherits from {nameof(SynchronizedRandomizerBase)} and is assigned to the {nameof(GenericServerHandler)} component");
         }
 
         public override void OnServerInit(InitialMatchPlayerDatasGuid initialMatchPlayerDatas)

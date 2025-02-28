@@ -14,7 +14,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
         private void Awake()
         {
             if (scoreProvider == null)
-                throw new NullReferenceException($"Make sure that your score management script inherits from {nameof(ScoreProviderBase)}");
+                throw new NullReferenceException($"Make sure that your score management script inherits from {nameof(ScoreProviderBase)} and is assigned to the {nameof(MatchEnder)} component");
         }
 
         public void EndMatch()

@@ -1841,6 +1841,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayNetworkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6654560827073783884, guid: 912476c71ab5fc7408c5da62261278fd,
+        type: 3}
+      propertyPath: disconnectionMask
+      value: 
+      objectReference: {fileID: 8756040006224138251}
     - target: {fileID: 9214336655454983649, guid: 912476c71ab5fc7408c5da62261278fd,
         type: 3}
       propertyPath: scoreProvider
@@ -1978,3 +1983,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f10bb83cd3c013047acbfcf04100fd11, type: 3}
+--- !u!114 &8756040006224138251 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1087317336174833000, guid: f10bb83cd3c013047acbfcf04100fd11,
+    type: 3}
+  m_PrefabInstance: {fileID: 8756040006224138250}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d708973e470277c4787b0247418957a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

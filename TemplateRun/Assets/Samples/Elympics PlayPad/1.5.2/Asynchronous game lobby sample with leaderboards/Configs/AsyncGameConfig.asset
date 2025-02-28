@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameName: AsynchronousGameSample
   gameId: 36b35382-23fe-42d2-b559-6e655be5f700
-  gameVersion: 25.1
+  gameVersion: 26
   players: 1
   gameplayScene: Assets/PlayPadSamples/AsyncGameSample/Gameplay/Scenes/AsyncGameSampleGameplay.unity
   gameplaySceneAsset: {fileID: 102900000, guid: fdb2caf0af7f9ad4ca444f6739859556,

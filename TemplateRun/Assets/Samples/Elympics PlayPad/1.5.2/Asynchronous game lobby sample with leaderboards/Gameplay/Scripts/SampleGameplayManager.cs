@@ -26,7 +26,7 @@ namespace ElympicsPlayPad.Samples.AsyncGame
             _remainingSecondsToEndGame.ValueChanged += (_, newValue) =>
                 {
                     if (_remainingSecondsToEndGame.Value % 5 == 0 && newValue != secondsToEndGameAutomatically && gameStarted)
-                        viewManager.RandomizeBackgroundColor(true);
+                        viewManager.RandomizeBackgroundColor();
                 };
 
             _points.ValueChanged += (_, newValue) => viewManager.UpdatePoints(newValue);
