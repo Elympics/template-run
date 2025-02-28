@@ -1,5 +1,5 @@
 using Elympics;
-using System.Collections.Generic;
+using ElympicsPlayPad.Samples.AsyncGame;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -7,7 +7,6 @@ public class GameStateSynchronizer : ElympicsMonoBehaviour, IInitializable
 {
     [SerializeField] private GameStartCountdown gameStartCountdown;
     [SerializeField] private EndGameTrigger endGameTrigger;
-    [SerializeField] private ScoreManager scoreManager;
 
     private readonly ElympicsInt gameState = new ElympicsInt((int)GameState.Initialization);
 
@@ -17,7 +16,6 @@ public class GameStateSynchronizer : ElympicsMonoBehaviour, IInitializable
     {
         Assert.IsNotNull(gameStartCountdown);
         Assert.IsNotNull(endGameTrigger);
-        Assert.IsNotNull(scoreManager);
 
         gameStartCountdown.OnCountdownEnded += StartGame;
         endGameTrigger.OnEndGameTriggered += FinishGame;
@@ -36,7 +34,9 @@ public class GameStateSynchronizer : ElympicsMonoBehaviour, IInitializable
 
         if (Elympics.IsServer)
         {
-            Elympics.EndGame(new ResultMatchPlayerDatas(new List<ResultMatchPlayerData> { new ResultMatchPlayerData { MatchmakerData = new float[1] { scoreManager.Score } } }));
+            var gameEnder = FindObjectOfType<MatchEnder>();
+            Assert.IsNotNull(gameEnder);
+            gameEnder.EndMatch();
         }
     }
 

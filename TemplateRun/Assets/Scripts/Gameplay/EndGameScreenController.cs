@@ -3,6 +3,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using JetBrains.Annotations;
+using Cysharp.Threading.Tasks;
+using ElympicsPlayPad.ExternalCommunicators.Leaderboard;
+using ElympicsPlayPad.Leaderboard;
+using System.Threading;
+using System;
 
 public class EndGameScreenController : ElympicsMonoBehaviour, IInitializable
 {
@@ -22,14 +27,14 @@ public class EndGameScreenController : ElympicsMonoBehaviour, IInitializable
     public void Initialize()
     {
         gameStateSynchronizer.SubscribeToGameStateChange(DisplayAtGameEnded);
-        leaderboardsDisplayer.OnCurrentPlayerEntrySet += TryDisplayHighScoreEffects;
+        //leaderboardsDisplayer.OnCurrentPlayerEntrySet += TryDisplayHighScoreEffects;
     }
 
     private void DisplayAtGameEnded(int previousState, int newState)
     {
         if ((GameState)newState == GameState.GameEnded)
         {
-            leaderboardsDisplayer.InitializeAndRun();
+            //leaderboardsDisplayer.InitializeAndRun();
             Invoke(nameof(ActivateEndGameScreen), activationDelay);
         }
     }
@@ -54,7 +59,7 @@ public class EndGameScreenController : ElympicsMonoBehaviour, IInitializable
     [UsedImplicitly]
     public void GoBackToMenu()
     {
-        PersistentEffectsManager.Instance.ChangeLoadingScreenDisplayState(false);
+        PersistentEffectsManager.Instance.SetMatchLoadingScreenActive(true);
 
         SceneManager.LoadScene(MainMenuSceneIndex);
     }

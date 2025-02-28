@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using ElympicsPlayPad.Samples.AsyncGame;
 
-public class LoadingScreenManager : MonoBehaviour
+public class LoadingScreenManager : MatchConnectingMask
 {
     private enum MessageState { Hidden, MovingIn, Stay, MovingOut }
 
@@ -40,6 +41,26 @@ public class LoadingScreenManager : MonoBehaviour
     private float messageTimer;
     private int messageIndex;
 
+    #region MatchConnectingMask overrides
+    protected override void Awake()
+    {
+        if (Instance != null)
+            return;
+
+        Instance = this;
+    }
+
+    public override void ShowOrUpdate(string _)
+    {
+        SetLoadingScreenActive(true);
+    }
+
+    public override void Hide()
+    {
+        SetLoadingScreenActive(false);
+    }
+    #endregion
+
     private void Start()
     {
         HideLoadingScreen();
@@ -48,12 +69,12 @@ public class LoadingScreenManager : MonoBehaviour
     public void AdjustToSceneLoaded(Scene scene)
     {
         if (scene.buildIndex == 0)
-            ChangeLoadingDisplayState(true);
+            SetLoadingScreenActive(false);
     }
 
-    public void ChangeLoadingDisplayState(bool toHidden)
+    public void SetLoadingScreenActive(bool active)
     {
-        isHidden = toHidden;
+        isHidden = !active;
     }
 
     private void Update()

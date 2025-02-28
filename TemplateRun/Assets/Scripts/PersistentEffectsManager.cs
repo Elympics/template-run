@@ -28,13 +28,13 @@ public class PersistentEffectsManager : MonoBehaviour
         SceneManager.sceneLoaded -= ReactToSceneLoaded;
     }
 
-    private void ReactToSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    private void ReactToSceneLoaded(Scene scene, LoadSceneMode _)
     {
         loadingScreenManager.AdjustToSceneLoaded(scene);
         musicManager.AdjustStateToScene(scene);
     }
 
-    public void ChangeLoadingScreenDisplayState(bool state) => loadingScreenManager.ChangeLoadingDisplayState(state);
+    public void SetMatchLoadingScreenActive(bool active) => loadingScreenManager.SetLoadingScreenActive(active);
     public void PlayGameplayMusic() => musicManager.PlayGameplayMusic();
     public void PlayGameOverSoundEffects() => musicManager.PlayGameOverSoundEffects();
 }

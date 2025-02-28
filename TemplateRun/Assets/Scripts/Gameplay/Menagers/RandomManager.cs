@@ -1,9 +1,18 @@
 using Elympics;
+using ElympicsPlayPad.Samples.AsyncGame;
 
-public class RandomManager : ElympicsMonoBehaviour, IUpdatable
+public class RandomManager : SynchronizedRandomizerBase, IUpdatable
 {
     private readonly ElympicsInt randomSeed = new ElympicsInt();
+
     public System.Random InitializedRandom { get; private set; }
+
+    public override int InitialSeed => randomSeed.Value;
+
+    public override void InitializeRandomization(int seed)
+    {
+        randomSeed.Value = seed;
+    }
 
     public void ElympicsUpdate()
     {
@@ -14,10 +23,5 @@ public class RandomManager : ElympicsMonoBehaviour, IUpdatable
     {
         //We use system random with set seed to make sure, that while random, the stages we will be spawning will be the same on both server and client
         InitializedRandom = new System.Random(randomSeed.Value + tick);
-    }
-
-    public void SetSeed(int seed)
-    {
-        randomSeed.Value = seed;
     }
 }

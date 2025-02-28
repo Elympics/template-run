@@ -28,7 +28,7 @@ public class MatchmakingManager : MonoBehaviour
         ElympicsLobbyClient.Instance.Matchmaker.MatchmakingFailed -= OnMatchmakingFailed;
     }
 
-    private void ControlPlayAccess(bool allowToPlay) => playButton.interactable = allowToPlay;
+    private void ControlPlayAccess(bool allowToPlay) => Debug.Log("Play access");
     private void OnMatchmakingFailed((string error, Guid _) result) => errorPanel.Display(result.error, true);
 
     [UsedImplicitly]
@@ -40,7 +40,7 @@ public class MatchmakingManager : MonoBehaviour
             return;
         }
 
-        PersistentEffectsManager.Instance.ChangeLoadingScreenDisplayState(false);
+        PersistentEffectsManager.Instance.SetMatchLoadingScreenActive(true);
         ControlPlayAccess(false);
 
         var (Region, LatencyMs) = await ClosestRegionFinder.GetClosestRegion();
